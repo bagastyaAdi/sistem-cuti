@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ganti Kata Sandi — Sistem Cuti Puspem Badung</title>
+<link rel="icon" href="logo-badung.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="auth">
+  <div class="box">
+    <div class="logo">
+      <img src="logo-badung.png" alt="">
+      <h1>Ganti Kata Sandi</h1>
+    </div>
+    <div class="card"><div class="card-b">
+      <div id="wait" class="loading"><div class="spin"></div></div>
+
+      <form id="form" class="stack" hidden>
+        <p class="muted" style="font-size:13px;margin:0">Masukkan kata sandi baru untuk akun Anda.</p>
+        <div class="field"><label for="p1">Kata Sandi Baru <span class="req">*</span></label><input id="p1" type="password" required></div>
+        <div class="field"><label for="p2">Ulangi Kata Sandi <span class="req">*</span></label><input id="p2" type="password" required></div>
+        <p id="msg" class="alert" hidden></p>
+        <button class="btn btn-primary btn-block" type="submit">Simpan Kata Sandi</button>
+      </form>
+
+      <p id="invalid" class="alert alert-bad" hidden>
+        Tautan tidak valid atau sudah kedaluwarsa. Minta tautan baru dari halaman
+        <a href="index.html">masuk</a> → “Lupa kata sandi”.
+      </p>
+    </div></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="assets/config.js"></script>
+<script src="assets/db.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  if (!DB.configured) { $("wait").textContent = "Server belum dikonfigurasi."; return; }
+
+  var ready = false;
+  DB.onAuth(function (event, session) {
+    if (event === "PASSWORD_RECOVERY" || (session && !ready)) {
+      ready = true; $("wait").hidden = true; $("form").hidden = false;
+    }
+  });
+  // fallback: cek sesi langsung (mis. token sudah diproses supabase-js)
+  DB.sb.auth.getSession().then(function (r) {
+    setTimeout(function () {
+      if (ready) return;
+      if (r.data.session) { $("wait").hidden = true; $("form").hidden = false; }
+      else { $("wait").hidden = true; $("invalid").hidden = false; }
+    }, 800);
+  });
+
+  $("form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var msg = $("msg"); msg.hidden = true;
+    if ($("p1").value.length < 4) { return fail("Kata sandi minimal 4 karakter."); }
+    if ($("p1").value !== $("p2").value) { return fail("Kata sandi tidak sama."); }
+    var b = this.querySelector("button"); b.disabled = true; b.textContent = "Menyimpan…";
+    try {
+      await DB.gantiSandiPemulihan($("p1").value);
+      msg.className = "alert alert-ok"; msg.textContent = "Kata sandi diperbarui. Mengarahkan ke halaman masuk…";
+      msg.hidden = false;
+      await DB.logout();
+      setTimeout(function () { location.replace("index.html"); }, 1400);
+    } catch (ex) { fail(ex.message); b.disabled = false; b.textContent = "Simpan Kata Sandi"; }
+    function fail(m) { msg.className = "alert alert-bad"; msg.textContent = m; msg.hidden = false; }
+  });
+})();
+</script>
+</body>
+</html>

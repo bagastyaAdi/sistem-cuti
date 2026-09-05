@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Masuk — Sistem Cuti Puspem Badung</title>
+<link rel="icon" href="logo-badung.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="auth">
+  <div class="box">
+    <div class="logo">
+      <img src="logo-badung.png" alt="Lambang Kabupaten Badung">
+      <h1>Sistem Cuti Pegawai</h1>
+      <p>Dinas Komunikasi dan Informatika<br>Kabupaten Badung</p>
+    </div>
+
+    <div class="card">
+      <div class="tabbar" style="border-radius:8px 8px 0 0">
+        <a id="tabMasuk" class="active">Masuk</a>
+        <a id="tabDaftar">Daftar Pegawai</a>
+      </div>
+
+      <div class="card-b">
+        <p id="cfgWarn" class="alert alert-bad" hidden>
+          Aplikasi belum terhubung ke server. Isi <code>assets/config.js</code>.
+        </p>
+
+        <!-- MASUK -->
+        <form id="formMasuk" class="stack">
+          <div class="field">
+            <label for="mEmail">Email <span class="req">*</span></label>
+            <input id="mEmail" type="email" autocomplete="username" required placeholder="nama@gmail.com">
+          </div>
+          <div class="field">
+            <label for="mPass">Kata Sandi <span class="req">*</span></label>
+            <input id="mPass" type="password" autocomplete="current-password" required>
+          </div>
+          <p id="mErr" class="alert alert-bad" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit">Masuk</button>
+          <div class="center"><a href="#" id="lnkLupa" style="font-size:13px">Lupa kata sandi?</a></div>
+        </form>
+
+        <!-- LUPA SANDI -->
+        <form id="formLupa" class="stack" hidden>
+          <p class="muted" style="font-size:13px;margin:0">Masukkan email akun Anda. Tautan penggantian kata sandi akan dikirim ke email tersebut.</p>
+          <div class="field">
+            <label for="lEmail">Email <span class="req">*</span></label>
+            <input id="lEmail" type="email" required placeholder="nama@gmail.com">
+          </div>
+          <p id="lMsg" class="alert" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit">Kirim Tautan</button>
+          <div class="center"><a href="#" id="lnkKembali" style="font-size:13px">Kembali ke halaman masuk</a></div>
+        </form>
+
+        <!-- DAFTAR -->
+        <form id="formDaftar" class="stack" hidden>
+          <div class="field"><label for="dEmail">Email Aktif <span class="req">*</span></label>
+            <input id="dEmail" type="email" required placeholder="nama@gmail.com">
+            <span class="hint">Dipakai untuk masuk &amp; pemulihan kata sandi.</span>
+          </div>
+          <div class="field-2">
+            <div class="field"><label for="dNip">NIP <span class="req">*</span></label><input id="dNip" inputmode="numeric" required></div>
+            <div class="field"><label for="dNama">Nama Lengkap <span class="req">*</span></label><input id="dNama" required></div>
+          </div>
+          <div class="field-2">
+            <div class="field"><label for="dJab">Jabatan <span class="req">*</span></label><input id="dJab" required></div>
+            <div class="field"><label for="dUnit">Unit Kerja <span class="req">*</span></label><input id="dUnit" value="Dinas Komunikasi dan Informatika" required></div>
+          </div>
+          <div class="field-2">
+            <div class="field"><label for="dHp">Nomor HP <span class="req">*</span></label><input id="dHp" inputmode="tel" required></div>
+            <div class="field"><label for="dMasa">Masa Kerja</label><input id="dMasa" placeholder="mis. 3 Tahun 2 Bulan"></div>
+          </div>
+          <div class="field">
+            <label for="dPass">Kata Sandi <span class="req">*</span></label>
+            <input id="dPass" type="password" autocomplete="new-password" required>
+          </div>
+          <p id="dMsg" class="alert" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit">Daftar</button>
+        </form>
+      </div>
+    </div>
+    <p class="muted center" style="font-size:12px;margin-top:12px">
+      Admin kepegawaian masuk lewat halaman yang sama dengan akun admin.
+    </p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="assets/config.js"></script>
+<script src="assets/db.js"></script>
+<script src="assets/login.js"></script>
+</body>
+</html>

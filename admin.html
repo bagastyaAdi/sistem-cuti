@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portal Kepegawaian — Sistem Cuti Puspem Badung</title>
+<link rel="icon" href="logo-badung.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="appbar">
+  <span class="brand"><img src="logo-badung.png" alt=""><span>Sistem Cuti<br><span class="sub">Portal Kepegawaian</span></span></span>
+  <span class="grow"></span>
+  <button id="btnTheme" class="iconbtn" title="Ganti tema" aria-label="Ganti tema"><span id="themeIco">&#9788;</span></button>
+  <div class="avatar" id="avatar">?</div>
+  <button id="btnLogout" class="iconbtn" title="Keluar" aria-label="Keluar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+  </button>
+</header>
+
+<nav class="tabbar">
+  <a data-tab="beranda" class="active">Beranda</a>
+  <a data-tab="antrean">Antrean Verifikasi</a>
+  <a data-tab="semua">Semua Pengajuan</a>
+  <a data-tab="pegawai">Data Pegawai</a>
+  <a data-tab="pengaturan">Pengaturan</a>
+</nav>
+
+<main class="wrap">
+  <div id="loading" class="loading"><div class="spin"></div></div>
+
+  <!-- BERANDA -->
+  <section data-pane="beranda" hidden class="stack">
+    <div class="card"><div class="card-b">
+      <div class="muted" style="font-size:12px">Masuk sebagai admin kepegawaian,</div>
+      <div id="hiNama" style="font-size:20px;font-weight:700"></div>
+    </div></div>
+    <div class="stats">
+      <div class="stat"><div class="k">Perlu Diperiksa</div><div class="v" id="stPeriksa" style="color:var(--warn)">0</div></div>
+      <div class="stat"><div class="k">Menunggu Revisi</div><div class="v" id="stRevisi" style="color:var(--rev)">0</div></div>
+      <div class="stat"><div class="k">Disetujui</div><div class="v" id="stSetuju" style="color:var(--ok)">0</div></div>
+      <div class="stat"><div class="k">Total Pegawai</div><div class="v" id="stPeg">0</div></div>
+    </div>
+    <div class="card">
+      <div class="card-h">Menunggu Tindakan Anda</div>
+      <div class="list" id="antreanRingkas"></div>
+    </div>
+  </section>
+
+  <!-- ANTREAN -->
+  <section data-pane="antrean" hidden>
+    <div class="card">
+      <div class="card-h">Antrean Verifikasi</div>
+      <div class="list" id="antrean"></div>
+      <div id="antreanEmpty" class="loading" hidden>Tidak ada pengajuan yang perlu diperiksa.</div>
+    </div>
+  </section>
+
+  <!-- SEMUA -->
+  <section data-pane="semua" hidden>
+    <div class="card">
+      <div class="card-h spread"><span>Semua Pengajuan</span>
+        <select id="filterStatus" style="width:auto;font-size:13px;padding:7px 10px">
+          <option value="">Semua status</option>
+          <option>Menunggu Verifikasi</option><option>Perlu Revisi</option>
+          <option>Disetujui</option><option>Tidak Disetujui</option>
+        </select>
+      </div>
+      <div class="tablewrap">
+        <table class="data">
+          <thead><tr><th>Pemohon</th><th>Jenis</th><th>Tgl Ajukan</th><th>Tanggal Cuti</th><th>Nomor</th><th>Status</th><th></th></tr></thead>
+          <tbody id="semuaBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA PEGAWAI -->
+  <section data-pane="pegawai" hidden>
+    <div class="card">
+      <div class="card-h">Data Pegawai</div>
+      <p class="card-b muted" style="font-size:12.5px;padding-bottom:0">
+        Pegawai mendaftar sendiri lewat halaman masuk. Di sini Anda dapat menaikkan/menurunkan hak akses admin.
+      </p>
+      <div class="tablewrap">
+        <table class="data">
+          <thead><tr><th>NIP</th><th>Nama</th><th>Jabatan</th><th>Peran</th><th></th></tr></thead>
+          <tbody id="pegBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENGATURAN -->
+  <section data-pane="pengaturan" hidden class="stack">
+    <form id="formNomor" class="card"><div class="card-b">
+      <div class="section-title">Penomoran Surat</div>
+      <p class="hint" style="margin:0 0 10px">Placeholder: <code>{no}</code> nomor urut · <code>{no3}</code> 3 digit · <code>{bulan}</code> bulan romawi · <code>{tahun}</code>. Naik +1 otomatis setiap surat disetujui.</p>
+      <div class="field-2">
+        <div class="field"><label for="nmFormat">Format nomor</label><input id="nmFormat"></div>
+        <div class="field"><label for="nmNext">Nomor urut berikutnya</label><input id="nmNext" type="number" min="1" class="tnum"></div>
+      </div>
+      <div class="field" style="margin-bottom:8px"><span class="hint">Contoh berikutnya:</span><b id="nmPrev" class="tnum">—</b></div>
+      <button class="btn btn-primary" type="submit">Simpan Penomoran</button>
+    </div></form>
+
+    <form id="formPejabat" class="card"><div class="card-b">
+      <div class="section-title">Pejabat Penandatangan</div>
+      <p class="hint" style="margin:0 0 10px">Muncul pada blok tanda tangan surat yang disetujui.</p>
+      <b style="font-size:13px">Pejabat Berwenang (bagian VIII)</b>
+      <div class="field" style="margin-top:8px"><label for="kJab">Jabatan</label><input id="kJab"></div>
+      <div class="field-2">
+        <div class="field"><label for="kNama">Nama</label><input id="kNama"></div>
+        <div class="field"><label for="kNip">NIP</label><input id="kNip" class="tnum"></div>
+      </div>
+      <b style="font-size:13px">Atasan Langsung (bagian VII)</b>
+      <div class="field" style="margin-top:8px"><label for="aJab">Jabatan</label><input id="aJab"></div>
+      <div class="field-2">
+        <div class="field"><label for="aNama">Nama</label><input id="aNama"></div>
+        <div class="field"><label for="aNip">NIP</label><input id="aNip" class="tnum"></div>
+      </div>
+      <button class="btn btn-primary" type="submit">Simpan Pejabat</button>
+    </div></form>
+
+    <div class="card"><div class="card-b">
+      <div class="section-title">Tanda Tangan &amp; Cap Dinas</div>
+      <p class="hint" style="margin:0 0 10px">PNG latar transparan disarankan. Ditempel otomatis pada surat berstatus <b>Disetujui</b> sebagai tanda legalitas.</p>
+      <div class="field-2">
+        <div class="field">
+          <label>Tanda Tangan Pejabat</label>
+          <div id="ttdPrev" class="paperbox center" style="min-height:88px;display:grid;place-items:center">belum ada</div>
+          <div class="row" style="margin-top:6px">
+            <input id="ttdFile" type="file" accept="image/*">
+            <button type="button" class="btn btn-ghost btn-sm" id="ttdClear">Hapus</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Cap / Stempel Dinas</label>
+          <div id="capPrev" class="paperbox center" style="min-height:88px;display:grid;place-items:center">belum ada</div>
+          <div class="row" style="margin-top:6px">
+            <input id="capFile" type="file" accept="image/*">
+            <button type="button" class="btn btn-ghost btn-sm" id="capClear">Hapus</button>
+          </div>
+        </div>
+      </div>
+      <label class="row" style="font-size:14px"><input type="checkbox" id="chkLegal"> Tampilkan tanda tangan &amp; cap pada surat yang disetujui</label>
+    </div></div>
+  </section>
+</main>
+
+<div id="modal" class="overlay" hidden>
+  <div class="modal" style="max-width:920px">
+    <div class="modal-h">
+      <h3 id="modalTitle">Formulir Cuti</h3>
+      <div class="grow"></div>
+      <div id="modalActions" class="row" style="flex-wrap:wrap;justify-content:flex-end"></div>
+      <button class="x" data-close aria-label="Tutup">&times;</button>
+    </div>
+    <div class="modal-b">
+      <div id="dokBar" class="alert" style="background:var(--surface-2);margin-bottom:10px" hidden></div>
+      <div class="paperbox"><div id="printArea"></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="assets/config.js"></script>
+<script src="assets/db.js"></script>
+<script src="assets/surat.js"></script>
+<script src="assets/admin.js"></script>
+</body>
+</html>
