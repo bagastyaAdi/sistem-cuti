@@ -63,6 +63,18 @@ Situs statis — deploy folder ini apa adanya.
 | `assets/db.js` | Lapisan data Supabase |
 | `assets/surat.js` | Pembangun dokumen A4 + cetak |
 | `db/schema.sql` | Tabel, Row Level Security, RPC, bucket storage |
+| `db/migrasi-template.sql` | Migrasi: kolom `template` (teks surat editable) + snapshot |
+
+## Template surat
+
+Seluruh teks tetap surat (kepala surat, judul, tujuan, kalimat penutup,
+judul bagian I–VIII, catatan kaki, logo) diedit admin di **Pengaturan →
+Template Surat** — tersimpan di `pengaturan.template` (JSONB), bukan hardcode.
+Kolom yang dikosongkan memakai teks bawaan.
+
+Saat surat **disetujui**, template + pejabat + TTD/cap disalin ke
+`pengajuan.template_snapshot`. Jadi kalau template diubah kemudian, surat yang
+sudah terbit tetap tercetak sama; hanya draf/menunggu yang ikut versi terbaru.
 
 ## Keamanan
 - `anon key` aman di frontend — akses dibatasi Row Level Security per peran.

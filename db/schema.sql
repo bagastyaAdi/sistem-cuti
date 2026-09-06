@@ -33,6 +33,7 @@ create table if not exists public.pengajuan (
   nomor          text default '',
   tgl_ajukan     date not null default current_date,
   tgl_surat      date,
+  template_snapshot jsonb,
   verifikator    uuid references public.profiles(id),
   created_at     timestamptz default now(),
   updated_at     timestamptz default now()
@@ -50,7 +51,8 @@ create table if not exists public.pengaturan (
   counter        int   default 1,
   show_legal     boolean default true,
   ttd_path       text  default '',
-  cap_path       text  default ''
+  cap_path       text  default '',
+  template       jsonb default '{}'::jsonb   -- teks tetap surat yang bisa diedit admin
 );
 insert into public.pengaturan (id) values (1) on conflict (id) do nothing;
 
@@ -139,7 +141,14 @@ begin
 
   update public.pengajuan
      set status = 'Disetujui', nomor = no_surat, tgl_surat = current_date,
-         catatan_revisi = '', verifikator = auth.uid(), updated_at = now()
+         catatan_revisi = '', verifikator = auth.uid(), updated_at = now(),
+         template_snapshot = jsonb_build_object(
+           'template',       coalesce(s.template, '{}'::jsonb),
+           'pejabat_kepala', s.pejabat_kepala,
+           'pejabat_atasan', s.pejabat_atasan,
+           'ttd_path',       s.ttd_path,
+           'cap_path',       s.cap_path,
+           'show_legal',     s.show_legal)
    where id = p_id
    returning * into rec;
 

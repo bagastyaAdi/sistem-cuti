@@ -145,6 +145,49 @@
       </div>
       <label class="row" style="font-size:14px"><input type="checkbox" id="chkLegal"> Tampilkan tanda tangan &amp; cap pada surat yang disetujui</label>
     </div></div>
+
+    <form id="formTemplate" class="card"><div class="card-b">
+      <div class="section-title">Template Surat</div>
+      <p class="hint" style="margin:0 0 12px">
+        Semua teks tetap pada surat. Kosongkan sebuah kolom untuk memakai teks bawaan.
+        Perubahan berlaku untuk surat yang <b>belum disetujui</b>; surat yang sudah terbit
+        tetap memakai template saat penerbitannya.
+      </p>
+
+      <div class="field"><label for="tKopBaris">Kepala surat — baris besar (satu per baris)</label>
+        <textarea id="tKopBaris" rows="2"></textarea></div>
+      <div class="field"><label for="tKopSub">Kepala surat — baris kecil / alamat (satu per baris)</label>
+        <textarea id="tKopSub" rows="3"></textarea></div>
+      <div class="field"><label for="tLogo">URL logo (opsional)</label>
+        <input id="tLogo" placeholder="kosong = logo Kabupaten Badung bawaan"></div>
+      <div class="field"><label for="tJudul">Judul surat</label><input id="tJudul"></div>
+      <div class="field-2">
+        <div class="field"><label for="tDitujukan">Ditujukan kepada (Yth.)</label><input id="tDitujukan"></div>
+        <div class="field"><label for="tKota">Kota pada tanggal surat</label><input id="tKota"></div>
+      </div>
+      <div class="field"><label for="tPenutup">Kalimat penutup pemohon</label><input id="tPenutup" placeholder="Hormat Saya,"></div>
+      <div class="field"><label for="tCatatan">Catatan kaki / dasar hukum (opsional)</label><textarea id="tCatatan" rows="2"></textarea></div>
+
+      <details style="margin:4px 0 12px">
+        <summary style="cursor:pointer;font-size:13px;font-weight:600">Judul bagian I–VIII (lanjutan)</summary>
+        <div class="stack" style="margin-top:10px">
+          <div class="field"><label for="tSec1">Bagian I</label><input id="tSec1"></div>
+          <div class="field"><label for="tSec2">Bagian II</label><input id="tSec2"></div>
+          <div class="field"><label for="tSec3">Bagian III</label><input id="tSec3"></div>
+          <div class="field"><label for="tSec4">Bagian IV</label><input id="tSec4"></div>
+          <div class="field"><label for="tSec5">Bagian V</label><input id="tSec5"></div>
+          <div class="field"><label for="tSec6">Bagian VI</label><input id="tSec6"></div>
+          <div class="field"><label for="tSec7">Bagian VII</label><input id="tSec7"></div>
+          <div class="field"><label for="tSec8">Bagian VIII</label><input id="tSec8"></div>
+        </div>
+      </details>
+
+      <div class="row" style="flex-wrap:wrap">
+        <button class="btn btn-primary" type="submit">Simpan Template</button>
+        <button class="btn btn-ghost" type="button" id="tPreview">Pratinjau</button>
+        <button class="btn btn-ghost" type="button" id="tReset">Kembalikan ke Bawaan</button>
+      </div>
+    </div></form>
   </section>
 </main>
 

@@ -173,7 +173,66 @@
     $("aJab").value = a.jabatan || ""; $("aNama").value = a.nama || ""; $("aNip").value = a.nip || "";
     $("chkLegal").checked = s.show_legal !== false;
     paintImg("ttdPrev", s.ttd_path); paintImg("capPrev", s.cap_path);
+    fillTemplate(s.template || {});
   }
+
+  // ---- template surat ----
+  var D = SURAT.DEFAULT_TPL;
+  function fillTemplate(t) {
+    $("tKopBaris").value = (t.kop_baris || D.kop_baris).join("\n");
+    $("tKopSub").value = (t.kop_sub || D.kop_sub).join("\n");
+    $("tLogo").value = t.logo_url || "";
+    $("tJudul").value = t.judul || D.judul;
+    $("tDitujukan").value = t.ditujukan || D.ditujukan;
+    $("tKota").value = t.kota || D.kota;
+    $("tPenutup").value = t.penutup_pemohon || D.penutup_pemohon;
+    $("tCatatan").value = t.catatan_kaki || "";
+    var sec = Object.assign({}, D.sec, t.sec || {});
+    for (var i = 1; i <= 8; i++) $("tSec" + i).value = sec[i] || "";
+  }
+  function collectTemplate() {
+    var lines = function (id) { return $(id).value.split("\n").map(function (x) { return x.trim(); }).filter(Boolean); };
+    var sec = {};
+    for (var i = 1; i <= 8; i++) { var v = $("tSec" + i).value.trim(); if (v) sec[i] = v; }
+    var t = {};
+    var kb = lines("tKopBaris"); if (kb.length) t.kop_baris = kb;
+    var ks = lines("tKopSub"); if (ks.length) t.kop_sub = ks;
+    if ($("tLogo").value.trim()) t.logo_url = $("tLogo").value.trim();
+    if ($("tJudul").value.trim()) t.judul = $("tJudul").value.trim();
+    if ($("tDitujukan").value.trim()) t.ditujukan = $("tDitujukan").value.trim();
+    if ($("tKota").value.trim()) t.kota = $("tKota").value.trim();
+    if ($("tPenutup").value.trim()) t.penutup_pemohon = $("tPenutup").value.trim();
+    if ($("tCatatan").value.trim()) t.catatan_kaki = $("tCatatan").value.trim();
+    if (Object.keys(sec).length) t.sec = sec;
+    return t;
+  }
+  function contohPengajuan() {
+    return {
+      pemohon: { nama: "Nama Pegawai, S.Kom", nip: "199001012015011001", jabatan: "Pranata Komputer",
+                 unit: "Dinas Komunikasi dan Informatika", masa_kerja: "10 Tahun" },
+      jenis: "Tahunan", alasan: "Keperluan keluarga.", mulai: DB.todayISO(), selesai: DB.addDays(DB.todayISO(), 2),
+      alamat: "", telp: "08123456789", sisa_n: 12, dokumen: [], status: DB.STATUS.MENUNGGU,
+      nomor: "", tgl_ajukan: DB.todayISO(), tgl_surat: null,
+    };
+  }
+  $("formTemplate").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var r = await DB.simpanPengaturan({ template: collectTemplate() });
+    if (r.error) return alert("Gagal: " + r.error.message);
+    pengaturan = await DB.getPengaturan(true); flash(e.target);
+  });
+  $("tReset").onclick = async function () {
+    if (!confirm("Kembalikan semua teks surat ke bawaan?")) return;
+    var r = await DB.simpanPengaturan({ template: {} });
+    if (r.error) return alert("Gagal: " + r.error.message);
+    pengaturan = await DB.getPengaturan(true); fillTemplate({});
+  };
+  $("tPreview").onclick = function () {
+    $("printArea").innerHTML = SURAT.html(contohPengajuan(), pengaturan, collectTemplate());
+    $("modalTitle").textContent = "Pratinjau Template (contoh data)";
+    $("dokBar").hidden = true; $("modalActions").innerHTML = "";
+    $("modal").hidden = false;
+  };
   function paintImg(id, url) {
     $(id).innerHTML = url ? '<img src="' + esc(url) + '" style="max-height:80px">' : "belum ada";
   }
