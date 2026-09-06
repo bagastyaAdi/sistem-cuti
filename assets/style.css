@@ -17,8 +17,8 @@
 :root[data-theme=light]{ color-scheme:light }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme=light]){
-    --bg:#12141a; --surface:#1b1e26; --surface-2:#232733; --text:#eef1f5; --muted:#9aa3b0; --border:#313746;
-    --primary-soft:#17263c;
+    --bg:#15171d; --surface:#1e222b; --surface-2:#282d38; --text:#eef1f5; --muted:#9aa3b0; --border:#343a47;
+    --primary-soft:#1b2b42;
     --ok:#4ed36b; --ok-bg:#12301c; --warn:#f0a64b; --warn-bg:#382812; --bad:#ff6b5e; --bad-bg:#3a1714; --rev:#c89bf0; --rev-bg:#2c1e3c;
     --shadow:0 1px 3px rgba(0,0,0,.4), 0 14px 34px -18px rgba(0,0,0,.55);
   }
