@@ -152,7 +152,9 @@ table.data tr:last-child td{border-bottom:0}
 .paper{background:#fff;color:#111;width:820px;padding:42px 50px;margin:0 auto;line-height:1.45}
 .paper table{border-collapse:collapse;width:100%}
 .paper td,.paper th{border:1px solid #111;padding:3px 6px;vertical-align:top;font-size:13px}
-.paper table.isi{table-layout:fixed}
+.paper table.sec{margin-top:7px}
+.paper table.sec .sig{vertical-align:top;padding-top:4px}
+.paper table.sec .kosong{border-left:0;border-right:0;border-bottom:0}
 .paper .st{font-weight:700;font-size:13px}
 .paper .b{font-weight:700}
 .paper .ctr{text-align:center}
@@ -164,6 +166,7 @@ table.data tr:last-child td{border-bottom:0}
 .paper .alamat .tmp{display:inline-block;padding-left:2.4em}
 .paperbox{background:var(--surface-2);border-radius:var(--radius);padding:12px;overflow:auto}
 .paperbox #printArea{overflow:auto}
+.paperbox .paper{will-change:transform}
 
 /* Pedoman */
 .pedoman ol,.pedoman ul{margin:6px 0 14px;padding-left:20px;line-height:1.6}

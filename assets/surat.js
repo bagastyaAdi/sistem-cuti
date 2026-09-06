@@ -50,7 +50,8 @@
     s = s || {};
     return {
       template: s.template, pejabat_kepala: s.pejabat_kepala, pejabat_atasan: s.pejabat_atasan,
-      ttd_path: s.ttd_path, cap_path: s.cap_path, show_legal: s.show_legal,
+      ttd_path: s.ttd_path, ttd_atasan_path: s.ttd_atasan_path, cap_path: s.cap_path,
+      legal_pos: s.legal_pos, show_legal: s.show_legal,
     };
   }
 
@@ -67,7 +68,8 @@
   function suratHTML(p, s, previewTpl) {
     var cfg = previewTpl
       ? { template: previewTpl, pejabat_kepala: (s || {}).pejabat_kepala, pejabat_atasan: (s || {}).pejabat_atasan,
-          ttd_path: (s || {}).ttd_path, cap_path: (s || {}).cap_path, show_legal: (s || {}).show_legal }
+          ttd_path: (s || {}).ttd_path, ttd_atasan_path: (s || {}).ttd_atasan_path, cap_path: (s || {}).cap_path,
+          legal_pos: (s || {}).legal_pos, show_legal: (s || {}).show_legal }
       : effectiveCfg(p, s);
     var T = mergeTpl(cfg.template);
     var m = p.pemohon || {};
@@ -88,16 +90,24 @@
       + '<tr><td>3. Cuti Sakit</td><td class="ctr">' + chk(J("Sakit")) + '</td><td>4. Cuti Melahirkan</td><td class="ctr">' + chk(J("Melahirkan")) + "</td></tr>"
       + '<tr><td>5. Cuti Karena Alasan Penting</td><td class="ctr">' + chk(J("Karena Alasan Penting")) + '</td><td>6. Cuti di Luar Tanggungan Negara</td><td class="ctr">' + chk(J("Di Luar Tanggungan Negara")) + "</td></tr>";
 
+    // baris label keputusan + baris tanda centang (dipisah, seperti form asli)
     var decRow =
-      '<tr><td class="ctr b">DISETUJUI<br>' + chk(dec === "ok") + "</td>"
-      + '<td class="ctr b">PERUBAHAN<br></td><td class="ctr b">DITANGGUHKAN<br></td>'
-      + '<td class="ctr b">TIDAK DISETUJUI<br>' + chk(dec === "no") + "</td></tr>";
+      '<tr><td class="ctr b" style="width:16%">DISETUJUI</td><td class="ctr b" style="width:20%">PERUBAHAN</td>'
+      + '<td class="ctr b" style="width:22%">DITANGGUHKAN</td><td class="ctr b">TIDAK DISETUJUI</td></tr>'
+      + '<tr><td class="ctr" style="height:22px">' + chk(dec === "ok") + '</td><td></td><td></td><td class="ctr">' + chk(dec === "no") + "</td></tr>";
 
-    function sigArea(pej, tinggi) {
+    // ttd = gambar tanda tangan pejabat ini; withCap = tempel cap dinas (hanya Kepala Dinas / bagian VIII);
+    // key = slot posisi ('dinas' | 'bidang') untuk offset yang diatur admin (cfg.legal_pos)
+    var POS = cfg.legal_pos || {};
+    function pos(o, dx, dy, dw) {
+      o = o || {};
+      return "left:" + (o.x != null ? o.x : dx) + "px;top:" + (o.y != null ? o.y : dy) + "px;width:" + (o.w || dw) + "px";
+    }
+    function sigArea(pej, tinggi, ttd, withCap, key) {
       var stamp = "";
       if (legal) {
-        if (cfg.cap_path) stamp += '<img alt="Cap" src="' + esc(cfg.cap_path) + '" style="position:absolute;left:-44px;top:-4px;width:118px;opacity:.82">';
-        if (cfg.ttd_path) stamp += '<img alt="TTD" src="' + esc(cfg.ttd_path) + '" style="position:absolute;left:8px;top:2px;width:128px">';
+        if (withCap && cfg.cap_path) stamp += '<img alt="Cap" src="' + esc(cfg.cap_path) + '" style="position:absolute;opacity:.82;' + pos(POS.cap, -44, -4, 118) + '">';
+        if (ttd) stamp += '<img alt="TTD" src="' + esc(ttd) + '" style="position:absolute;' + pos(POS[key], 8, 2, 128) + '">';
       }
       var gap = legal ? '<div style="position:relative;height:' + (tinggi - 30) + 'px;width:230px">' + stamp + "</div>" : "<br><br><br>";
       return esc(pej.jabatan || "") + ",<br>" + gap + "(" + esc(pej.nama || "..............................") + ")<br>NIP. " + esc(pej.nip || "..............................");
@@ -118,43 +128,36 @@
       + '<div class="ctr b" style="text-decoration:underline;font-size:14px">' + esc(T.judul) + "</div>"
       + '<div class="ctr" style="margin-bottom:10px">Nomor : ' + esc(p.nomor || ".................../Diskominfo") + "</div>"
 
-      + '<table class="isi">'
-      + '<colgroup><col style="width:18%"><col style="width:32%"><col style="width:20%"><col style="width:30%"></colgroup>'
-
-      + '<tr><td colspan="4" class="st">' + esc(T.sec["1"]) + "</td></tr>"
-      + "<tr><td>Nama</td><td>" + esc(m.nama) + "</td><td>NIP</td><td class=\"tnum\">" + esc(m.nip) + "</td></tr>"
+      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["1"]) + "</td></tr>"
+      + '<tr><td style="width:22%">Nama</td><td style="width:38%">' + esc(m.nama) + '</td><td style="width:15%">NIP</td><td class="tnum">' + esc(m.nip) + "</td></tr>"
       + "<tr><td>Jabatan</td><td>" + esc(m.jabatan) + "</td><td>Masa Kerja</td><td>" + esc(m.masa_kerja || "-") + "</td></tr>"
-      + '<tr><td>Unit Kerja</td><td colspan="3">' + esc(m.unit) + "</td></tr>"
+      + '<tr><td>Unit Kerja</td><td colspan="3">' + esc(m.unit) + "</td></tr></table>"
 
-      + '<tr><td colspan="4" class="st">' + esc(T.sec["2"]) + "</td></tr>" + jenisRows
+      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["2"]) + "</td></tr>" + jenisRows + "</table>"
 
-      + '<tr><td colspan="4" class="st">' + esc(T.sec["3"]) + "</td></tr>"
-      + '<tr><td colspan="4">' + esc(p.alasan) + "</td></tr>"
+      + '<table class="sec"><tr><td class="st">' + esc(T.sec["3"]) + "</td></tr><tr><td>" + esc(p.alasan) + "</td></tr></table>"
 
-      + '<tr><td colspan="4" class="st">' + esc(T.sec["4"]) + "</td></tr>"
-      + "<tr><td>Selama</td><td>" + hari(p.mulai, p.selesai) + " (hari)</td>"
-      + "<td>Mulai Tanggal</td><td>" + fmtID(p.mulai) + " s/d " + fmtID(p.selesai) + "</td></tr>"
+      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["4"]) + "</td></tr>"
+      + '<tr><td style="width:12%">Selama</td><td style="width:20%">' + hari(p.mulai, p.selesai) + " (hari)</td>"
+      + '<td style="width:16%">Mulai Tanggal</td><td>' + fmtID(p.mulai) + " s/d " + fmtID(p.selesai) + "</td></tr></table>"
 
-      + '<tr><td colspan="4" class="st">' + esc(T.sec["5"]) + "</td></tr>"
-      + '<tr><td colspan="3">1. Cuti Tahunan &mdash; sisa tahun berjalan (N)</td><td class="tnum">' + esc(p.sisa_n) + "</td></tr>"
-      + '<tr><td colspan="3">2. Cuti Besar</td><td class="tnum">0</td></tr>'
-      + '<tr><td colspan="3">3. Cuti Sakit</td><td class="tnum">0</td></tr>'
-      + '<tr><td colspan="3">4. Cuti Melahirkan</td><td class="tnum">0</td></tr>'
-      + '<tr><td colspan="3">5. Cuti Karena Alasan Penting</td><td class="tnum">0</td></tr>'
-      + '<tr><td colspan="3">6. Cuti di Luar Tanggungan Negara</td><td class="tnum">0</td></tr>'
+      + '<table class="sec"><tr><td colspan="2" class="st">' + esc(T.sec["5"]) + "</td></tr>"
+      + '<tr><td style="width:60%">1. Cuti Tahunan &mdash; sisa tahun berjalan (N)</td><td class="tnum">' + esc(p.sisa_n) + "</td></tr>"
+      + '<tr><td>2. Cuti Besar</td><td class="tnum">0</td></tr><tr><td>3. Cuti Sakit</td><td class="tnum">0</td></tr>'
+      + '<tr><td>4. Cuti Melahirkan</td><td class="tnum">0</td></tr><tr><td>5. Cuti Karena Alasan Penting</td><td class="tnum">0</td></tr>'
+      + '<tr><td>6. Cuti di Luar Tanggungan Negara</td><td class="tnum">0</td></tr></table>'
 
-      + '<tr><td colspan="4" class="st">' + esc(T.sec["6"]) + "</td></tr>"
-      + '<tr><td colspan="3">' + esc(p.alamat || "(sesuai alamat domisili pada data kepegawaian)") + dok + "</td>"
+      + '<table class="sec"><tr><td colspan="2" class="st">' + esc(T.sec["6"]) + "</td></tr>"
+      + '<tr><td style="width:70%">' + esc(p.alamat || "(sesuai alamat domisili pada data kepegawaian)") + dok + "</td>"
       + "<td>No. HP / TELP<br>" + esc(p.telp) + "<br><br>" + esc(T.penutup_pemohon) + "<br>"
       + (m.ttd_path ? '<img alt="Tanda tangan pemohon" src="' + esc(m.ttd_path) + '" style="max-height:52px;max-width:150px;margin:2px 0">' : "<br><br><br>")
-      + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr>"
+      + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr></table>"
 
-      + '<tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" style="height:96px;position:relative">' + (dec ? sigArea(pa, 70) : "") + "</td></tr>"
+      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>" + decRow
+      + '<tr><td colspan="4" class="sig" style="height:104px;position:relative">' + (dec ? sigArea(pa, 74, cfg.ttd_atasan_path, false, "bidang") : "") + "</td></tr></table>"
 
-      + '<tr><td colspan="4" class="st">' + esc(T.sec["8"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" style="height:110px;position:relative">' + (dec ? sigArea(pk, 90) : "") + "</td></tr>"
-      + "</table>"
+      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["8"]) + "</td></tr>" + decRow
+      + '<tr><td colspan="4" class="sig" style="height:118px;position:relative">' + (dec ? sigArea(pk, 92, cfg.ttd_path, true, "dinas") : "") + "</td></tr></table>"
 
       + (T.catatan_kaki ? '<div style="margin-top:8px;font-size:11px">' + esc(T.catatan_kaki) + "</div>" : "")
       + '<div style="margin-top:8px;font-size:11px;color:#555">' + catatanStatus(p) + "</div>"
@@ -163,15 +166,32 @@
 
   function cetak() { window.print(); }
 
-  // Preview surat ditampilkan FIX seukuran A4 (lebar tetap 820px), persis seperti
-  // hasil cetak. Tidak diskalakan / responsif — di layar sempit geser mendatar.
-  function fit() {}
+  // Surat SELALU tata letak A4 penuh (lebar 820px) — tak pernah reflow/responsif.
+  // Di layar sempit seluruh halaman diperkecil (transform: scale) supaya utuh &
+  // proporsi A4 terjaga; pengguna bisa cubit-zoom untuk perbesar. Saat cetak,
+  // transform di-reset (@media print) → kembali A4 penuh.
+  function fit() {
+    var pa = document.getElementById("printArea");
+    var paper = pa && pa.querySelector(".paper");
+    if (!paper) return;
+    paper.style.transform = "none";
+    paper.style.transformOrigin = "top left";
+    var avail = pa.clientWidth;
+    var natural = paper.offsetWidth || 820;
+    var scale = Math.min(1, avail / natural);
+    if (scale >= 0.999) { pa.style.height = ""; return; }
+    paper.style.transform = "scale(" + scale + ")";
+    pa.style.height = (paper.offsetHeight * scale) + "px";
+  }
+  var _t;
+  window.addEventListener("resize", function () { clearTimeout(_t); _t = setTimeout(fit, 120); });
 
   function render(html) {
     var pa = document.getElementById("printArea");
     if (!pa) return;
     pa.style.height = "";
     pa.innerHTML = html;
+    requestAnimationFrame(function () { requestAnimationFrame(fit); });
   }
 
   window.SURAT = { html: suratHTML, render: render, fit: fit, cetak: cetak, DEFAULT_TPL: DEFAULT_TPL, mergeTpl: mergeTpl };

@@ -107,16 +107,16 @@
     <form id="formPejabat" class="card"><div class="card-b">
       <div class="section-title">Pejabat Penandatangan</div>
       <p class="hint" style="margin:0 0 10px">Muncul pada blok tanda tangan surat yang disetujui.</p>
-      <b style="font-size:13px">Pejabat Berwenang (bagian VIII)</b>
-      <div class="field" style="margin-top:8px"><label for="kJab">Jabatan</label><input id="kJab"></div>
+      <b style="font-size:13px">Kepala Dinas — Bagian VIII (Keputusan)</b>
+      <div class="field" style="margin-top:8px"><label for="kJab">Jabatan</label><input id="kJab" placeholder="Kepala Dinas Komunikasi dan Informatika"></div>
       <div class="field-2">
-        <div class="field"><label for="kNama">Nama</label><input id="kNama"></div>
+        <div class="field"><label for="kNama">Nama</label><input id="kNama" placeholder="Dr. I Kenyt Gede Arta, AP., SH., M.Si."></div>
         <div class="field"><label for="kNip">NIP</label><input id="kNip" class="tnum"></div>
       </div>
-      <b style="font-size:13px">Atasan Langsung (bagian VII)</b>
-      <div class="field" style="margin-top:8px"><label for="aJab">Jabatan</label><input id="aJab"></div>
+      <b style="font-size:13px">Kepala Bidang / Atasan Langsung — Bagian VII (Pertimbangan)</b>
+      <div class="field" style="margin-top:8px"><label for="aJab">Jabatan</label><input id="aJab" placeholder="Kepala Bidang Layanan E-Government"></div>
       <div class="field-2">
-        <div class="field"><label for="aNama">Nama</label><input id="aNama"></div>
+        <div class="field"><label for="aNama">Nama</label><input id="aNama" placeholder="I Gusti Agung Angga Mulyanta, S.Kom"></div>
         <div class="field"><label for="aNip">NIP</label><input id="aNip" class="tnum"></div>
       </div>
       <button class="btn btn-primary" type="submit">Simpan Pejabat</button>
@@ -124,10 +124,10 @@
 
     <div class="card"><div class="card-b">
       <div class="section-title">Tanda Tangan &amp; Cap Dinas</div>
-      <p class="hint" style="margin:0 0 10px">PNG latar transparan disarankan. Ditempel otomatis pada surat berstatus <b>Disetujui</b> sebagai tanda legalitas.</p>
+      <p class="hint" style="margin:0 0 10px">PNG latar transparan disarankan. Ditempel otomatis pada surat berstatus <b>Disetujui</b>. Tiap pejabat memakai tanda tangannya sendiri.</p>
       <div class="field-2">
         <div class="field">
-          <label>Tanda Tangan Pejabat</label>
+          <label>TTD Kepala Dinas <span class="hint">(bagian VIII)</span></label>
           <div id="ttdPrev" class="paperbox center" style="min-height:88px;display:grid;place-items:center">belum ada</div>
           <div class="row" style="margin-top:6px">
             <input id="ttdFile" type="file" accept="image/*">
@@ -135,7 +135,15 @@
           </div>
         </div>
         <div class="field">
-          <label>Cap / Stempel Dinas</label>
+          <label>TTD Kepala Bidang <span class="hint">(bagian VII)</span></label>
+          <div id="ttdAtasanPrev" class="paperbox center" style="min-height:88px;display:grid;place-items:center">belum ada</div>
+          <div class="row" style="margin-top:6px">
+            <input id="ttdAtasanFile" type="file" accept="image/*">
+            <button type="button" class="btn btn-ghost btn-sm" id="ttdAtasanClear">Hapus</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Cap / Stempel Dinas <span class="hint">(menumpuk TTD Kepala Dinas)</span></label>
           <div id="capPrev" class="paperbox center" style="min-height:88px;display:grid;place-items:center">belum ada</div>
           <div class="row" style="margin-top:6px">
             <input id="capFile" type="file" accept="image/*">

@@ -172,7 +172,7 @@
     $("kJab").value = k.jabatan || ""; $("kNama").value = k.nama || ""; $("kNip").value = k.nip || "";
     $("aJab").value = a.jabatan || ""; $("aNama").value = a.nama || ""; $("aNip").value = a.nip || "";
     $("chkLegal").checked = s.show_legal !== false;
-    paintImg("ttdPrev", s.ttd_path); paintImg("capPrev", s.cap_path);
+    paintImg("ttdPrev", s.ttd_path); paintImg("ttdAtasanPrev", s.ttd_atasan_path); paintImg("capPrev", s.cap_path);
     fillTemplate(s.template || {});
   }
 
@@ -264,19 +264,28 @@
     await DB.simpanPengaturan({ show_legal: this.checked });
     pengaturan = await DB.getPengaturan(true);
   });
+  var LEGAL_COL = { ttd: "ttd_path", ttd_atasan: "ttd_atasan_path", cap: "cap_path" };
+  function patch1(k, v) { var o = {}; o[k] = v; return o; }
   async function upimg(input, jenis, prevId) {
     var f = input.files[0]; if (!f) return;
     if (f.size > 1.5 * 1024 * 1024) { alert("Maksimal 1,5 MB."); input.value = ""; return; }
     try {
       var url = await DB.uploadLegal(f, jenis);
-      await DB.simpanPengaturan(jenis === "ttd" ? { ttd_path: url } : { cap_path: url });
+      await DB.simpanPengaturan(patch1(LEGAL_COL[jenis], url));
       pengaturan = await DB.getPengaturan(true); paintImg(prevId, url);
     } catch (ex) { alert("Gagal unggah: " + ex.message); }
+    input.value = "";
+  }
+  async function clearimg(jenis, prevId, fileId) {
+    await DB.simpanPengaturan(patch1(LEGAL_COL[jenis], ""));
+    pengaturan = await DB.getPengaturan(true); paintImg(prevId, ""); $(fileId).value = "";
   }
   $("ttdFile").addEventListener("change", function () { upimg(this, "ttd", "ttdPrev"); });
+  $("ttdAtasanFile").addEventListener("change", function () { upimg(this, "ttd_atasan", "ttdAtasanPrev"); });
   $("capFile").addEventListener("change", function () { upimg(this, "cap", "capPrev"); });
-  $("ttdClear").onclick = async function () { await DB.simpanPengaturan({ ttd_path: "" }); pengaturan = await DB.getPengaturan(true); paintImg("ttdPrev", ""); $("ttdFile").value = ""; };
-  $("capClear").onclick = async function () { await DB.simpanPengaturan({ cap_path: "" }); pengaturan = await DB.getPengaturan(true); paintImg("capPrev", ""); $("capFile").value = ""; };
+  $("ttdClear").onclick = function () { clearimg("ttd", "ttdPrev", "ttdFile"); };
+  $("ttdAtasanClear").onclick = function () { clearimg("ttd_atasan", "ttdAtasanPrev", "ttdAtasanFile"); };
+  $("capClear").onclick = function () { clearimg("cap", "capPrev", "capFile"); };
 
   function flash(form) {
     var s = document.createElement("span"); s.className = "hint"; s.style.color = "var(--ok)"; s.textContent = "  ✓ Tersimpan";

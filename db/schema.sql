@@ -51,8 +51,10 @@ create table if not exists public.pengaturan (
   nomor_format   text  default '800.1.11.4/{no}/Diskominfo',
   counter        int   default 1,
   show_legal     boolean default true,
-  ttd_path       text  default '',
-  cap_path       text  default '',
+  ttd_path       text  default '',           -- TTD Kepala Dinas (bagian VIII)
+  ttd_atasan_path text default '',           -- TTD Kepala Bidang / atasan langsung (bagian VII)
+  cap_path       text  default '',           -- cap dinas, hanya bagian VIII (menumpuk TTD Kepala Dinas)
+  legal_pos      jsonb default '{}'::jsonb,  -- offset yang diatur admin: {dinas:{x,y,w}, bidang:{x,y,w}, cap:{x,y,w}}
   template       jsonb default '{}'::jsonb   -- teks tetap surat yang bisa diedit admin
 );
 insert into public.pengaturan (id) values (1) on conflict (id) do nothing;
@@ -147,9 +149,11 @@ begin
            'template',       coalesce(s.template, '{}'::jsonb),
            'pejabat_kepala', s.pejabat_kepala,
            'pejabat_atasan', s.pejabat_atasan,
-           'ttd_path',       s.ttd_path,
-           'cap_path',       s.cap_path,
-           'show_legal',     s.show_legal)
+           'ttd_path',        s.ttd_path,
+           'ttd_atasan_path', s.ttd_atasan_path,
+           'cap_path',        s.cap_path,
+           'legal_pos',       coalesce(s.legal_pos, '{}'::jsonb),
+           'show_legal',      s.show_legal)
    where id = p_id
    returning * into rec;
 
