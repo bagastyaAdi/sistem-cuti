@@ -198,6 +198,7 @@
     var sec = Object.assign({}, D.sec, t.sec || {});
     for (var i = 1; i <= 8; i++) $("tSec" + i).value = sec[i] || "";
     for (var j = 1; j <= 6; j++) $("tJenis" + j).value = (t.jenis || [])[j - 1] || "";
+    for (var k = 1; k <= 4; k++) $("tKep" + k).value = (t.keputusan || [])[k - 1] || "";
   }
   function collectTemplate() {
     var lines = function (id) { return $(id).value.split("\n").map(function (x) { return x.trim(); }).filter(Boolean); };
@@ -205,8 +206,11 @@
     for (var i = 1; i <= 8; i++) { var v = $("tSec" + i).value.trim(); if (v) sec[i] = v; }
     var jn = [], anyJ = false;
     for (var j = 1; j <= 6; j++) { var jv = $("tJenis" + j).value.trim(); jn.push(jv); if (jv) anyJ = true; }
+    var kp = [], anyK = false;
+    for (var k = 1; k <= 4; k++) { var kv = $("tKep" + k).value.trim(); kp.push(kv); if (kv) anyK = true; }
     var t = {};
     if (anyJ) t.jenis = jn;
+    if (anyK) t.keputusan = kp;
     var kb = lines("tKopBaris"); if (kb.length) t.kop_baris = kb;
     var ks = lines("tKopSub"); if (ks.length) t.kop_sub = ks;
     if ($("tLogo").value.trim()) t.logo_url = $("tLogo").value.trim();

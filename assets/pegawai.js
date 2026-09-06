@@ -89,7 +89,7 @@
         + '<div class="spread"><span class="t">Cuti ' + esc(r.jenis) + '</span>' + DB.badge(r.status) + '</div>'
         + '<div class="m">' + fmtID(r.mulai) + ' – ' + fmtID(r.selesai) + ' (' + hari(r.mulai, r.selesai) + ' hari) · diajukan ' + fmtID(r.tgl_ajukan) + '</div>'
         + (r.nomor ? '<div class="m">Nomor: ' + esc(r.nomor) + '</div>' : '')
-        + (r.status === S.REVISI && r.catatan_revisi ? '<div class="m" style="color:var(--rev)">Catatan: ' + esc(r.catatan_revisi) + '</div>' : '')
+        + (r.status === S.REVISI && r.catatan_revisi ? '<div class="m" style="color:var(--text)">Catatan: ' + esc(r.catatan_revisi) + '</div>' : '')
         + '<div class="row" style="margin-top:6px">' + act + '</div></div>';
     }).join("");
   }

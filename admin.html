@@ -36,8 +36,8 @@
       <div id="hiNama" style="font-size:20px;font-weight:700"></div>
     </div></div>
     <div class="stats">
-      <div class="stat"><div class="k">Perlu Diperiksa</div><div class="v" id="stPeriksa" style="color:var(--warn)">0</div></div>
-      <div class="stat"><div class="k">Menunggu Revisi</div><div class="v" id="stRevisi" style="color:var(--rev)">0</div></div>
+      <div class="stat"><div class="k">Perlu Diperiksa</div><div class="v" id="stPeriksa">0</div></div>
+      <div class="stat"><div class="k">Menunggu Revisi</div><div class="v" id="stRevisi">0</div></div>
       <div class="stat"><div class="k">Disetujui</div><div class="v" id="stSetuju" style="color:var(--ok)">0</div></div>
       <div class="stat"><div class="k">Total Pegawai</div><div class="v" id="stPeg">0</div></div>
     </div>
@@ -203,31 +203,58 @@
       <div class="field"><label for="tPenutup">Kalimat penutup pemohon</label><input id="tPenutup" placeholder="Hormat Saya,"></div>
       <div class="field"><label for="tCatatan">Catatan kaki / dasar hukum (opsional)</label><textarea id="tCatatan" rows="2"></textarea></div>
 
-      <details style="margin:4px 0 12px">
-        <summary style="cursor:pointer;font-size:13px;font-weight:600">Judul bagian I–VIII (lanjutan)</summary>
-        <div class="stack" style="margin-top:10px">
-          <div class="field"><label for="tSec1">Bagian I</label><input id="tSec1"></div>
-          <div class="field"><label for="tSec2">Bagian II</label><input id="tSec2"></div>
-          <div class="field"><label for="tSec3">Bagian III</label><input id="tSec3"></div>
-          <div class="field"><label for="tSec4">Bagian IV</label><input id="tSec4"></div>
-          <div class="field"><label for="tSec5">Bagian V</label><input id="tSec5"></div>
-          <div class="field"><label for="tSec6">Bagian VI</label><input id="tSec6"></div>
-          <div class="field"><label for="tSec7">Bagian VII</label><input id="tSec7"></div>
-          <div class="field"><label for="tSec8">Bagian VIII</label><input id="tSec8"></div>
+      <div class="section-title" style="margin-top:14px">Isi per Bagian I–VIII</div>
+      <p class="hint" style="margin:0 0 8px">Judul tiap bagian + teks di dalamnya. Kosongkan = teks bawaan.</p>
+
+      <details class="bagian"><summary>Bagian I — Data Pegawai</summary>
+        <div class="field"><label for="tSec1">Judul bagian</label><input id="tSec1" placeholder="I. DATA PEGAWAI"></div>
+      </details>
+
+      <details class="bagian"><summary>Bagian II — Jenis Cuti</summary>
+        <div class="field"><label for="tSec2">Judul bagian</label><input id="tSec2" placeholder="II. JENIS CUTI YANG DIAMBIL"></div>
+        <p class="hint" style="margin:2px 0 6px">Nama 6 jenis cuti (urutan tetap 1–6). Dipakai juga di Bagian V.</p>
+        <div class="field"><label for="tJenis1">1</label><input id="tJenis1" placeholder="Cuti Tahunan"></div>
+        <div class="field"><label for="tJenis2">2</label><input id="tJenis2" placeholder="Cuti Besar"></div>
+        <div class="field"><label for="tJenis3">3</label><input id="tJenis3" placeholder="Cuti Sakit"></div>
+        <div class="field"><label for="tJenis4">4</label><input id="tJenis4" placeholder="Cuti Melahirkan"></div>
+        <div class="field"><label for="tJenis5">5</label><input id="tJenis5" placeholder="Cuti Karena Alasan Penting"></div>
+        <div class="field"><label for="tJenis6">6</label><input id="tJenis6" placeholder="Cuti di Luar Tanggungan Negara"></div>
+      </details>
+
+      <details class="bagian"><summary>Bagian III — Alasan Cuti</summary>
+        <div class="field"><label for="tSec3">Judul bagian</label><input id="tSec3" placeholder="III. ALASAN CUTI"></div>
+      </details>
+
+      <details class="bagian"><summary>Bagian IV — Lamanya Cuti</summary>
+        <div class="field"><label for="tSec4">Judul bagian</label><input id="tSec4" placeholder="IV. LAMANYA CUTI"></div>
+      </details>
+
+      <details class="bagian"><summary>Bagian V — Catatan Cuti</summary>
+        <div class="field"><label for="tSec5">Judul bagian</label><input id="tSec5" placeholder="V. CATATAN CUTI"></div>
+        <p class="hint" style="margin:2px 0">Nama jenis cuti mengikuti <b>Bagian II</b>.</p>
+      </details>
+
+      <details class="bagian"><summary>Bagian VI — Alamat Selama Cuti</summary>
+        <div class="field"><label for="tSec6">Judul bagian</label><input id="tSec6" placeholder="VI. ALAMAT SELAMA MENJALANKAN CUTI"></div>
+        <p class="hint" style="margin:2px 0">Kalimat penutup pemohon diatur di kolom <b>Kalimat penutup pemohon</b> di atas.</p>
+      </details>
+
+      <details class="bagian"><summary>Bagian VII — Pertimbangan Atasan Langsung</summary>
+        <div class="field"><label for="tSec7">Judul bagian</label><input id="tSec7" placeholder="VII. PERTIMBANGAN ATASAN LANGSUNG"></div>
+        <p class="hint" style="margin:2px 0 6px">Label 4 kolom keputusan. Dipakai juga di Bagian VIII.</p>
+        <div class="field-2">
+          <div class="field"><label for="tKep1">Kolom 1</label><input id="tKep1" placeholder="DISETUJUI"></div>
+          <div class="field"><label for="tKep2">Kolom 2</label><input id="tKep2" placeholder="PERUBAHAN"></div>
+        </div>
+        <div class="field-2">
+          <div class="field"><label for="tKep3">Kolom 3</label><input id="tKep3" placeholder="DITANGGUHKAN"></div>
+          <div class="field"><label for="tKep4">Kolom 4</label><input id="tKep4" placeholder="TIDAK DISETUJUI"></div>
         </div>
       </details>
 
-      <details style="margin:4px 0 12px">
-        <summary style="cursor:pointer;font-size:13px;font-weight:600">Nama jenis cuti (bagian II &amp; V)</summary>
-        <p class="hint" style="margin:8px 0">Urutan tetap 1–6. Kosongkan untuk pakai teks bawaan.</p>
-        <div class="stack">
-          <div class="field"><label for="tJenis1">Jenis 1</label><input id="tJenis1" placeholder="Cuti Tahunan"></div>
-          <div class="field"><label for="tJenis2">Jenis 2</label><input id="tJenis2" placeholder="Cuti Besar"></div>
-          <div class="field"><label for="tJenis3">Jenis 3</label><input id="tJenis3" placeholder="Cuti Sakit"></div>
-          <div class="field"><label for="tJenis4">Jenis 4</label><input id="tJenis4" placeholder="Cuti Melahirkan"></div>
-          <div class="field"><label for="tJenis5">Jenis 5</label><input id="tJenis5" placeholder="Cuti Karena Alasan Penting"></div>
-          <div class="field"><label for="tJenis6">Jenis 6</label><input id="tJenis6" placeholder="Cuti di Luar Tanggungan Negara"></div>
-        </div>
+      <details class="bagian"><summary>Bagian VIII — Keputusan Pejabat Berwenang</summary>
+        <div class="field"><label for="tSec8">Judul bagian</label><input id="tSec8" placeholder="VIII. KEPUTUSAN PEJABAT YANG BERWENANG MEMBERIKAN CUTI"></div>
+        <p class="hint" style="margin:2px 0">Label kolom keputusan mengikuti <b>Bagian VII</b>.</p>
       </details>
 
       <div class="row" style="flex-wrap:wrap">

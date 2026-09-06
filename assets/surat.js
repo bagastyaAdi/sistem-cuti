@@ -23,6 +23,8 @@
     catatan_kaki: "",
     // Label 6 jenis cuti (bagian II & V). Urutan tetap — hanya teksnya bisa diubah admin.
     jenis: ["Cuti Tahunan", "Cuti Besar", "Cuti Sakit", "Cuti Melahirkan", "Cuti Karena Alasan Penting", "Cuti di Luar Tanggungan Negara"],
+    // Label 4 kolom keputusan (bagian VII & VIII).
+    keputusan: ["DISETUJUI", "PERUBAHAN", "DITANGGUHKAN", "TIDAK DISETUJUI"],
     sec: {
       "1": "I. DATA PEGAWAI",
       "2": "II. JENIS CUTI YANG DIAMBIL",
@@ -39,14 +41,15 @@
     t = t || {};
     var o = JSON.parse(JSON.stringify(DEFAULT_TPL));
     Object.keys(DEFAULT_TPL).forEach(function (k) {
-      if (k === "sec" || k === "jenis") return;
+      if (k === "sec" || k === "jenis" || k === "keputusan") return;
       if (t[k] != null && !(Array.isArray(t[k]) && t[k].length === 0) && t[k] !== "") o[k] = t[k];
     });
     o.sec = Object.assign({}, DEFAULT_TPL.sec, t.sec || {});
-    o.jenis = DEFAULT_TPL.jenis.map(function (d, i) {
-      var v = (t.jenis || [])[i];
-      return (v != null && v !== "") ? v : d;
-    });
+    var fillArr = function (def, got) {
+      return def.map(function (d, i) { var v = (got || [])[i]; return (v != null && v !== "") ? v : d; });
+    };
+    o.jenis = fillArr(DEFAULT_TPL.jenis, t.jenis);
+    o.keputusan = fillArr(DEFAULT_TPL.keputusan, t.keputusan);
     return o;
   }
 
@@ -100,9 +103,10 @@
       + "<tr>" + jcell(4) + jcell(5) + "</tr>";
 
     // baris label keputusan + baris tanda centang (dipisah, seperti form asli)
+    var K = T.keputusan;
     var decRow =
-      '<tr><td class="ctr b" style="width:16%">DISETUJUI</td><td class="ctr b" style="width:20%">PERUBAHAN</td>'
-      + '<td class="ctr b" style="width:22%">DITANGGUHKAN</td><td class="ctr b">TIDAK DISETUJUI</td></tr>'
+      '<tr><td class="ctr b" style="width:16%">' + esc(K[0]) + '</td><td class="ctr b" style="width:20%">' + esc(K[1]) + "</td>"
+      + '<td class="ctr b" style="width:22%">' + esc(K[2]) + '</td><td class="ctr b">' + esc(K[3]) + "</td></tr>"
       + '<tr><td class="ctr" style="height:22px">' + chk(dec === "ok") + '</td><td></td><td></td><td class="ctr">' + chk(dec === "no") + "</td></tr>";
 
     // ttd = gambar tanda tangan pejabat ini; withCap = tempel cap dinas (hanya Kepala Dinas / bagian VIII);
