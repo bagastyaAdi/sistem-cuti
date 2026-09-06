@@ -109,7 +109,7 @@
     function keputusanRows(tinggi, sigHTML) {
       return '<tr><td class="ctr b" style="width:16%">' + esc(K[0]) + '</td><td class="ctr b" style="width:20%">' + esc(K[1]) + "</td>"
         + '<td class="ctr b" style="width:22%">' + esc(K[2]) + '</td><td class="ctr b">' + esc(K[3]) + "</td></tr>"
-        + '<tr><td class="ctr nbb" style="height:24px">' + chk(dec === "ok") + '</td><td class="nbb"></td><td class="nbb"></td>'
+        + '<tr><td class="ctr" style="height:24px">' + chk(dec === "ok") + '</td><td></td><td></td>'
         + '<td rowspan="2" class="sig" style="height:' + tinggi + 'px;position:relative">'
         + (chk(dec === "no") ? '<div class="ctr">' + chk(dec === "no") + "</div>" : "") + sigHTML + "</td></tr>"
         + '<tr><td colspan="3" class="nbt"></td></tr>';
