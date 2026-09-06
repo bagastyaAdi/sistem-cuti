@@ -51,8 +51,7 @@
     try { pengaturan = await DB.getPengaturan(); } catch (e) { pengaturan = {}; }
 
     $("avatar").textContent = DB.initials(me.nama);
-    $("hiNama").textContent = me.nama;
-    $("hiMeta").textContent = me.jabatan + " · " + me.unit;
+    $("hiMeta").textContent = "Halo, " + me.nama + " · " + me.jabatan;
     fillProfil();
     await reload();
     $("loading").hidden = true;
@@ -268,7 +267,7 @@
     if (r.error) { alert("Gagal menyimpan: " + r.error.message); return; }
     me = await DB.currentProfile();
     $("avatar").textContent = DB.initials(me.nama);
-    $("hiNama").textContent = me.nama; $("hiMeta").textContent = me.jabatan + " · " + me.unit;
+    $("hiMeta").textContent = "Halo, " + me.nama + " · " + me.jabatan;
     fillProfil();
     $("profilMsg").hidden = false; setTimeout(function () { $("profilMsg").hidden = true; }, 2500);
   });

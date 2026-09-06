@@ -44,7 +44,7 @@
     if (me.role !== "admin") { location.replace("pegawai.html"); return; }
     pengaturan = await DB.getPengaturan();
     $("avatar").textContent = DB.initials(me.nama);
-    $("hiNama").textContent = me.nama;
+    $("hiNama").textContent = "Masuk sebagai admin kepegawaian — " + me.nama;
     fillPengaturan();
     await reload();
     $("loading").hidden = true;

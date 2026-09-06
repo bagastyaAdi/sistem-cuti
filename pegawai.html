@@ -36,18 +36,16 @@
 
   <!-- BERANDA -->
   <section data-pane="beranda" hidden class="stack">
-    <div class="card"><div class="card-b">
-      <div class="muted" style="font-size:12px">Selamat datang,</div>
-      <div id="hiNama" style="font-size:20px;font-weight:700"></div>
-      <div id="hiMeta" class="muted" style="font-size:12px;margin-top:2px"></div>
-    </div></div>
+    <div class="page-head">
+      <div><h1 id="hiNama">Beranda</h1><p id="hiMeta"></p></div>
+      <button class="btn btn-primary" id="btnAjukan1">+ Ajukan Cuti</button>
+    </div>
     <div class="stats">
       <div class="stat" data-ic="clock"><div class="k">Dalam Proses</div><div class="v" id="stProses">0</div></div>
       <div class="stat" data-ic="check"><div class="k">Selesai</div><div class="v" id="stSelesai" style="color:var(--ok)">0</div></div>
       <div class="stat" data-ic="edit"><div class="k">Perlu Revisi</div><div class="v" id="stRevisi">0</div></div>
       <div class="stat" data-ic="calendar"><div class="k">Sisa Cuti Tahunan</div><div class="v" id="stSisa">12</div></div>
     </div>
-    <button class="btn btn-primary btn-block" id="btnAjukan1">+ Ajukan Cuti</button>
     <div class="card">
       <div class="card-h">Aktivitas Terakhir</div>
       <div class="list" id="recent"></div>
@@ -56,8 +54,8 @@
 
   <!-- AJUKAN -->
   <section data-pane="ajukan" hidden class="stack">
+    <div class="page-head"><div><h1 id="ajukanTitle">Formulir Permohonan Cuti</h1></div></div>
     <div class="card">
-      <div class="card-h" id="ajukanTitle">Formulir Permohonan Cuti</div>
       <div class="card-b">
         <p id="revBanner" class="alert alert-rev" hidden></p>
         <p id="ttdReminder" class="alert alert-bad" hidden><svg class="ic-i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 5a1.25 1.25 0 1 1 0 2.5A1.25 1.25 0 0 1 12 7zm1.25 10h-2.5a.75.75 0 0 1 0-1.5h.5v-3.5h-.5a.75.75 0 0 1 0-1.5h1.25a.75.75 0 0 1 .75.75v4.25h.5a.75.75 0 0 1 0 1.5z"/></svg>Tanda tangan belum diunggah. Buka tab <b>Profil</b> &rarr; bagian <b>Tanda Tangan</b> untuk mengunggahnya agar muncul di surat.</p>
@@ -108,9 +106,11 @@
 
   <!-- RIWAYAT -->
   <section data-pane="riwayat" hidden class="stack">
+    <div class="page-head">
+      <div><h1>Riwayat Pengajuan</h1></div>
+      <button class="btn btn-primary" id="btnAjukan2">+ Ajukan</button>
+    </div>
     <div class="card">
-      <div class="card-h spread"><span>Riwayat Pengajuan</span>
-        <button class="btn btn-primary btn-sm" id="btnAjukan2">+ Ajukan</button></div>
       <div class="list" id="riwayat"></div>
       <div id="riwayatEmpty" class="loading" hidden>Belum ada pengajuan.</div>
     </div>
@@ -118,8 +118,8 @@
 
   <!-- PROFIL -->
   <section data-pane="profil" hidden class="stack">
+    <div class="page-head"><div><h1>Profil Pegawai</h1></div></div>
     <div class="card">
-      <div class="card-h">Profil Pegawai</div>
       <div class="card-b">
         <form id="formProfil">
           <div class="field"><label>NIP</label><input id="pNip" readonly></div>
@@ -165,10 +165,9 @@
 
   <!-- PEDOMAN -->
   <section data-pane="pedoman" hidden class="stack">
+    <div class="page-head"><div><h1>Pedoman Pengajuan Cuti</h1><p>Pilih topik untuk membuka penjelasannya.</p></div></div>
     <div class="card">
-      <div class="card-h">Pedoman Pengajuan Cuti</div>
       <div class="card-b">
-        <p class="hint">Pilih topik untuk membuka penjelasannya. Ikuti urutannya bila baru pertama kali mengajukan.</p>
 
         <details class="guide"><summary><span class="g-no">1</span> Lengkapi profil &amp; tanda tangan</summary>
           <div class="g-body pedoman">

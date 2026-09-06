@@ -37,10 +37,7 @@
 
   <!-- BERANDA -->
   <section data-pane="beranda" hidden class="stack">
-    <div class="card"><div class="card-b">
-      <div class="muted" style="font-size:12px">Masuk sebagai admin kepegawaian,</div>
-      <div id="hiNama" style="font-size:20px;font-weight:700"></div>
-    </div></div>
+    <div class="page-head"><div><h1>Beranda</h1><p id="hiNama"></p></div></div>
     <div class="stats">
       <div class="stat" data-ic="clock"><div class="k">Perlu Diperiksa</div><div class="v" id="stPeriksa">0</div></div>
       <div class="stat" data-ic="edit"><div class="k">Menunggu Revisi</div><div class="v" id="stRevisi">0</div></div>
@@ -55,8 +52,8 @@
 
   <!-- ANTREAN -->
   <section data-pane="antrean" hidden class="stack">
+    <div class="page-head"><div><h1>Antrean Verifikasi</h1><p>Pengajuan yang menunggu diperiksa.</p></div></div>
     <div class="card">
-      <div class="card-h">Antrean Verifikasi</div>
       <div class="list" id="antrean"></div>
       <div id="antreanEmpty" class="loading" hidden>Tidak ada pengajuan yang perlu diperiksa.</div>
     </div>
@@ -64,14 +61,15 @@
 
   <!-- SEMUA -->
   <section data-pane="semua" hidden class="stack">
+    <div class="page-head">
+      <div><h1>Semua Pengajuan</h1></div>
+      <select id="filterStatus" style="width:auto;font-size:13px;padding:8px 12px">
+        <option value="">Semua status</option>
+        <option>Menunggu Verifikasi</option><option>Perlu Revisi</option>
+        <option>Disetujui</option><option>Tidak Disetujui</option>
+      </select>
+    </div>
     <div class="card">
-      <div class="card-h spread"><span>Semua Pengajuan</span>
-        <select id="filterStatus" style="width:auto;font-size:13px;padding:7px 10px">
-          <option value="">Semua status</option>
-          <option>Menunggu Verifikasi</option><option>Perlu Revisi</option>
-          <option>Disetujui</option><option>Tidak Disetujui</option>
-        </select>
-      </div>
       <div class="tablewrap">
         <table class="data">
           <thead><tr><th>Pemohon</th><th>Jenis</th><th>Tgl Ajukan</th><th>Tanggal Cuti</th><th>Nomor</th><th>Status</th><th></th></tr></thead>
@@ -83,10 +81,9 @@
 
   <!-- DATA PEGAWAI -->
   <section data-pane="pegawai" hidden class="stack">
+    <div class="page-head"><div><h1>Data Pegawai</h1><p>Pegawai mendaftar sendiri lewat halaman masuk.</p></div></div>
     <div class="card">
-      <div class="card-h">Data Pegawai</div>
       <div class="card-b">
-        <p class="hint">Pegawai mendaftar sendiri lewat halaman masuk. Di sini Anda dapat menaikkan / menurunkan hak akses admin.</p>
         <input id="pegSearch" type="search" placeholder="Cari nama / NIP / jabatan…" autocomplete="off">
         <div class="tablewrap" style="margin-top:14px">
           <table class="data">
@@ -100,6 +97,7 @@
 
   <!-- PENGATURAN -->
   <section data-pane="pengaturan" hidden class="stack">
+    <div class="page-head"><div><h1>Pengaturan</h1><p>Format nomor, pejabat, tanda tangan, dan template surat.</p></div></div>
     <form id="formNomor" class="card"><div class="card-b">
       <div class="section-title">Penomoran Surat</div>
       <p class="hint">Placeholder: <code>{no}</code> nomor urut · <code>{no3}</code> 3 digit · <code>{bulan}</code> bulan romawi · <code>{tahun}</code>. Naik +1 otomatis setiap surat disetujui.</p>
@@ -271,10 +269,9 @@
 
   <!-- PANDUAN -->
   <section data-pane="panduan" hidden class="stack">
+    <div class="page-head"><div><h1>Panduan Pengaturan</h1><p>Pilih topik untuk membuka penjelasannya.</p></div></div>
     <div class="card">
-      <div class="card-h">Panduan Pengaturan</div>
       <div class="card-b">
-        <p class="hint">Pilih topik untuk membuka penjelasannya.</p>
 
         <details class="guide"><summary>Penomoran surat</summary>
           <div class="g-body pedoman">
