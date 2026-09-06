@@ -108,8 +108,9 @@
     function sigArea(pej, tinggi, ttd, withCap, key) {
       var stamp = "";
       if (legal) {
-        if (withCap && cfg.cap_path) stamp += '<img alt="Cap" src="' + esc(cfg.cap_path) + '" style="position:absolute;opacity:.85;' + pos(POS.cap, -46, 0, 120) + '">';
-        if (ttd) stamp += '<img alt="TTD" src="' + esc(ttd) + '" style="position:absolute;' + pos(POS[key], 40, 4, 150) + '">';
+        // TTD dulu, cap di atasnya (semi-transparan) — persis surat asli.
+        if (ttd) stamp += '<img alt="TTD" src="' + esc(ttd) + '" style="position:absolute;z-index:1;' + pos(POS[key], 40, 4, 150) + '">';
+        if (withCap && cfg.cap_path) stamp += '<img alt="Cap" src="' + esc(cfg.cap_path) + '" style="position:absolute;z-index:2;opacity:.8;' + pos(POS.cap, -46, 0, 120) + '">';
       }
       var gap = legal ? '<div style="position:relative;height:' + (tinggi - 34) + 'px">' + stamp + "</div>" : "<br><br><br>";
       return '<div class="ttdblok">' + esc(pej.jabatan || "") + ",<br>" + gap
