@@ -159,13 +159,15 @@ table.data tr:last-child td{border-bottom:0}
 .paper .chk{font-weight:700;font-size:15px}
 .kop{display:flex;gap:16px;align-items:center;border-bottom:3px solid #111;padding-bottom:8px;margin-bottom:14px}
 .kop .l{flex:1;text-align:center}
-.paperbox{background:var(--surface-2);border-radius:var(--radius);padding:12px;overflow-x:auto}
+.paperbox{background:var(--surface-2);border-radius:var(--radius);padding:12px;overflow:hidden}
+.paperbox #printArea{overflow:hidden}
+.paperbox .paper{will-change:transform}
 
 @media print{
   @page{size:A4;margin:12mm}
   body *{visibility:hidden}
   #printArea,#printArea *{visibility:visible}
-  #printArea{position:absolute;left:0;top:0;width:100%}
-  .paper{width:auto;padding:0}
-  .paperbox{background:none;padding:0}
+  #printArea{position:absolute;left:0;top:0;width:100%;height:auto !important;overflow:visible !important}
+  #printArea .paper{transform:none !important;width:auto;padding:0}
+  .paperbox{background:none;padding:0;overflow:visible !important}
 }

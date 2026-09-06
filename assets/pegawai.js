@@ -169,7 +169,7 @@
 
   // ---- letter modal ----
   function openLetter(row, canPrint, isPreview) {
-    $("printArea").innerHTML = SURAT.html(row, pengaturan);
+    SURAT.render(SURAT.html(row, pengaturan));
     $("modalTitle").textContent = isPreview ? "Preview Surat" : "Formulir Permohonan Cuti";
     var act = $("modalActions"); act.innerHTML = "";
     if (isPreview) {

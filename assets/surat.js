@@ -148,5 +148,32 @@
 
   function cetak() { window.print(); }
 
-  window.SURAT = { html: suratHTML, cetak: cetak, DEFAULT_TPL: DEFAULT_TPL, mergeTpl: mergeTpl };
+  // Skala dokumen A4 (lebar tetap 820px) agar utuh di layar sempit — tanpa scroll,
+  // tanpa terpotong. Cetak tetap ukuran penuh (transform di-reset di @media print).
+  function fit() {
+    var pa = document.getElementById("printArea");
+    var paper = pa && pa.querySelector(".paper");
+    if (!paper) return;
+    paper.style.transform = "none";
+    paper.style.transformOrigin = "top left";
+    var avail = pa.clientWidth;
+    var natural = paper.offsetWidth || 820;
+    var scale = Math.min(1, avail / natural);
+    if (scale >= 0.999) { pa.style.height = ""; return; }
+    paper.style.transform = "scale(" + scale + ")";
+    pa.style.height = (paper.offsetHeight * scale) + "px";
+  }
+  var _t;
+  window.addEventListener("resize", function () { clearTimeout(_t); _t = setTimeout(fit, 120); });
+
+  // render + pas-kan setelah modal tampil (dua frame)
+  function render(html) {
+    var pa = document.getElementById("printArea");
+    if (!pa) return;
+    pa.style.height = "";
+    pa.innerHTML = html;
+    requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  }
+
+  window.SURAT = { html: suratHTML, render: render, fit: fit, cetak: cetak, DEFAULT_TPL: DEFAULT_TPL, mergeTpl: mergeTpl };
 })();

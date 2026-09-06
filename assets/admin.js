@@ -120,7 +120,7 @@
   });
 
   function openLetter(r, review) {
-    $("printArea").innerHTML = SURAT.html(r, pengaturan);
+    SURAT.render(SURAT.html(r, pengaturan));
     $("modalTitle").textContent = "Formulir Cuti — " + r.pemohon.nama;
     var bar = $("dokBar");
     if (r.dokumen && r.dokumen.length) {
@@ -228,7 +228,7 @@
     pengaturan = await DB.getPengaturan(true); fillTemplate({});
   };
   $("tPreview").onclick = function () {
-    $("printArea").innerHTML = SURAT.html(contohPengajuan(), pengaturan, collectTemplate());
+    SURAT.render(SURAT.html(contohPengajuan(), pengaturan, collectTemplate()));
     $("modalTitle").textContent = "Pratinjau Template (contoh data)";
     $("dokBar").hidden = true; $("modalActions").innerHTML = "";
     $("modal").hidden = false;
