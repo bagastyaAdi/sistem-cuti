@@ -8,16 +8,20 @@
   --nav:#0b1a2c; --gold:#c8a44d;
   --radius:8px; --shadow:0 1px 2px rgba(16,24,40,.05), 0 8px 24px -14px rgba(16,24,40,.18);
   --font:-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Inter,Roboto,system-ui,sans-serif;
+  color-scheme:light;
 }
+@media (prefers-color-scheme:dark){ :root:not([data-theme=light]){ color-scheme:dark } }
+:root[data-theme=dark]{ color-scheme:dark }
+:root[data-theme=light]{ color-scheme:light }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme=light]){
-    --bg:#0c0d10; --surface:#16181d; --surface-2:#1d2027; --text:#eef1f5; --muted:#9aa3b0; --border:#2a2e37;
+    --bg:#12141a; --surface:#1b1e26; --surface-2:#232733; --text:#eef1f5; --muted:#9aa3b0; --border:#313746;
     --ok:#4ed36b; --ok-bg:#12301c; --warn:#f0a64b; --warn-bg:#382812; --bad:#ff6b5e; --bad-bg:#3a1714; --rev:#c89bf0; --rev-bg:#2c1e3c;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.6);
   }
 }
 :root[data-theme=dark]{
-  --bg:#0c0d10; --surface:#16181d; --surface-2:#1d2027; --text:#eef1f5; --muted:#9aa3b0; --border:#2a2e37;
+  --bg:#12141a; --surface:#1b1e26; --surface-2:#232733; --text:#eef1f5; --muted:#9aa3b0; --border:#313746;
   --ok:#4ed36b; --ok-bg:#12301c; --warn:#f0a64b; --warn-bg:#382812; --bad:#ff6b5e; --bad-bg:#3a1714; --rev:#c89bf0; --rev-bg:#2c1e3c;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.6);
 }
@@ -31,7 +35,7 @@ a{color:var(--primary);text-decoration:none}
 .muted{color:var(--muted)}
 .tnum{font-variant-numeric:tabular-nums}
 .center{text-align:center}
-.wrap{max-width:900px;margin:0 auto;padding:16px}
+.wrap{max-width:900px;margin:0 auto;padding:16px;padding-top:max(16px,env(safe-area-inset-top))}
 .stack{display:grid;gap:14px}
 .row{display:flex;gap:10px;align-items:center}
 .spread{display:flex;gap:10px;align-items:center;justify-content:space-between}
@@ -63,7 +67,7 @@ a{color:var(--primary);text-decoration:none}
 }
 
 /* Cards / sections */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);width:100%}
 .card-h{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:600;font-size:15px}
 .card-b{padding:16px}
 .section-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:4px 0 8px}
@@ -156,6 +160,10 @@ table.data tr:last-child td{border-bottom:0}
 .auth .logo h1{margin:0;font-size:18px}
 .auth .logo p{margin:0;font-size:12.5px;color:var(--muted)}
 .auth .switch{text-align:center;font-size:13px;margin-top:14px}
+.auth .card{overflow:hidden}
+.authtabs{display:flex;border-bottom:1px solid var(--border)}
+.authtabs a{flex:1;text-align:center;padding:13px 10px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
+.authtabs a.active{color:var(--text);border-bottom-color:var(--primary);background:var(--surface-2)}
 
 /* Formal letter (kertas A4, selalu terang) */
 .paper,.paper *{font-family:"Times New Roman","Liberation Serif",Tinos,Georgia,serif}

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Portal Kepegawaian — Sistem Cuti Puspem Badung</title>
 <link rel="icon" href="logo-badung.png">
+<script>try{var _t=localStorage.getItem("cuti-theme");if(_t)document.documentElement.dataset.theme=_t;}catch(e){}</script>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -53,7 +54,7 @@
   </section>
 
   <!-- ANTREAN -->
-  <section data-pane="antrean" hidden>
+  <section data-pane="antrean" hidden class="stack">
     <div class="card">
       <div class="card-h">Antrean Verifikasi</div>
       <div class="list" id="antrean"></div>
@@ -62,7 +63,7 @@
   </section>
 
   <!-- SEMUA -->
-  <section data-pane="semua" hidden>
+  <section data-pane="semua" hidden class="stack">
     <div class="card">
       <div class="card-h spread"><span>Semua Pengajuan</span>
         <select id="filterStatus" style="width:auto;font-size:13px;padding:7px 10px">
@@ -81,7 +82,7 @@
   </section>
 
   <!-- DATA PEGAWAI -->
-  <section data-pane="pegawai" hidden>
+  <section data-pane="pegawai" hidden class="stack">
     <div class="card">
       <div class="card-h">Data Pegawai</div>
       <p class="card-b muted" style="font-size:12.5px;padding-bottom:0">

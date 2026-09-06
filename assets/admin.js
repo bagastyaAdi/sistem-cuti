@@ -8,17 +8,21 @@
 
   var me = null, pengaturan = null, rows = [], pegawai = [];
 
-  // ---- tema ----
+  // ---- tema: default ikut tema HP, tombol untuk memaksa terang/gelap ----
   (function () {
+    var root = document.documentElement;
+    var sysDark = function () { return matchMedia("(prefers-color-scheme: dark)").matches; };
+    var effDark = function () { return root.dataset.theme ? root.dataset.theme === "dark" : sysDark(); };
+    var paint = function () { $("themeIco").innerHTML = effDark() ? "&#9789;" : "&#9788;"; };
     var t = null; try { t = localStorage.getItem("cuti-theme"); } catch (e) {}
-    if (t) document.documentElement.dataset.theme = t;
-    $("themeIco").innerHTML = (document.documentElement.dataset.theme === "dark") ? "&#9789;" : "&#9788;";
+    if (t) root.dataset.theme = t;
+    paint();
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", paint);
     $("btnTheme").onclick = function () {
-      var cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      var next = cur === "dark" ? "light" : "dark";
-      document.documentElement.dataset.theme = next;
+      var next = effDark() ? "light" : "dark";
+      root.dataset.theme = next;
       try { localStorage.setItem("cuti-theme", next); } catch (e) {}
-      $("themeIco").innerHTML = next === "dark" ? "&#9789;" : "&#9788;";
+      paint();
     };
   })();
   $("btnLogout").onclick = async function () { await DB.logout(); location.replace("index.html"); };
