@@ -23,6 +23,7 @@
   <a data-tab="ajukan">Ajukan Cuti</a>
   <a data-tab="riwayat">Riwayat</a>
   <a data-tab="profil">Profil</a>
+  <a data-tab="pedoman">Pedoman</a>
 </nav>
 
 <main class="wrap">
@@ -54,6 +55,7 @@
       <div class="card-h" id="ajukanTitle">Formulir Permohonan Cuti</div>
       <div class="card-b">
         <p id="revBanner" class="alert alert-rev" hidden></p>
+        <p id="ttdReminder" class="alert alert-rev" hidden>Tanda tangan belum diunggah. Buka tab <b>Profil</b> &rarr; bagian <b>Tanda Tangan</b> untuk mengunggahnya agar muncul di surat.</p>
 
         <form id="formCuti">
           <div class="section-title">Data Pegawai</div>
@@ -139,6 +141,57 @@
           <p id="profilMsg" class="alert alert-ok" hidden>Profil tersimpan.</p>
           <button class="btn btn-primary" type="submit">Simpan Profil</button>
         </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEDOMAN -->
+  <section data-pane="pedoman" hidden class="stack">
+    <div class="card">
+      <div class="card-h">Pedoman Pengajuan Cuti</div>
+      <div class="card-b pedoman">
+        <div class="section-title">Langkah 1 — Lengkapi Profil &amp; Tanda Tangan</div>
+        <ol>
+          <li>Buka tab <b>Profil</b>. Periksa Nama, Jabatan, Unit Kerja, Nomor HP, dan Masa Kerja.</li>
+          <li>Pada bagian <b>Tanda Tangan</b>, klik kolom pilih berkas lalu unggah foto/scan tanda tangan Anda
+            (format gambar, <b>PNG latar transparan</b> lebih baik, maksimal <b>1,5 MB</b>). Pratinjau muncul di kotak putih.</li>
+          <li>Klik <b>Simpan Profil</b>. Tanda tangan otomatis dipakai di <b>bagian VI</b> surat pada kolom &ldquo;Hormat Saya&rdquo;.</li>
+        </ol>
+        <p class="hint">Tanpa tanda tangan, kolom pemohon pada surat akan kosong. Anda tetap bisa mengajukan, tetapi disarankan mengunggah lebih dulu.</p>
+
+        <div class="section-title">Langkah 2 — Isi Formulir Cuti</div>
+        <ol>
+          <li>Buka tab <b>Ajukan Cuti</b> (atau tombol <b>+ Ajukan Cuti</b> di Beranda).</li>
+          <li><b>Data Pegawai</b> terisi otomatis dari profil. Lengkapi <b>Nomor HP</b> bila kosong.</li>
+          <li><b>Data Cuti:</b> pilih <b>Jenis Cuti</b>; isi <b>Tanggal Mulai</b> dan <b>Tanggal Selesai</b>
+            (jumlah hari dihitung otomatis); tulis <b>Alasan Cuti</b> (wajib); isi <b>Alamat Selama Cuti</b> bila perlu.</li>
+          <li><b>Dokumen Pendukung</b> (opsional): mis. surat dokter untuk cuti sakit, undangan. Maksimal 5 MB per berkas.</li>
+          <li>Klik <b>Preview Surat</b> — periksa dokumen A4 yang tampil.</li>
+          <li>Klik <b>Ajukan Surat</b> untuk mengirim, atau <b>Edit</b> untuk memperbaiki dulu.</li>
+        </ol>
+
+        <div class="section-title">Langkah 3 — Tunggu Verifikasi</div>
+        <p>Setelah dikirim, status menjadi <span class="badge b-warn">Menunggu Verifikasi</span>.
+          Sub Bagian Kepegawaian memeriksa data dan dokumen Anda. Pantau di tab <b>Riwayat</b>.</p>
+
+        <div class="section-title">Arti Status</div>
+        <table class="pedoman-tbl">
+          <tr><td><span class="badge b-warn">Menunggu Verifikasi</span></td>
+              <td>Sudah terkirim, sedang diperiksa Kepegawaian. <b>Tunggu</b>, tidak ada tindakan.</td></tr>
+          <tr><td><span class="badge b-rev">Perlu Revisi</span></td>
+              <td>Ada data belum sesuai — baca <b>Catatan</b> di Riwayat. Klik <b>Perbaiki</b>, betulkan, lalu kirim ulang.</td></tr>
+          <tr><td><span class="badge b-ok">Disetujui</span></td>
+              <td>Nomor surat terbit otomatis; tanda tangan &amp; cap dinas ditempel. Klik <b>Lihat</b> lalu <b>Cetak / Unduh PDF</b>.</td></tr>
+          <tr><td><span class="badge b-bad">Tidak Disetujui</span></td>
+              <td>Pengajuan ditolak. Anda dapat membuat pengajuan baru bila diperlukan.</td></tr>
+        </table>
+
+        <div class="section-title">Catatan</div>
+        <ul>
+          <li><b>Sisa Cuti Tahunan</b> di Beranda dihitung dari cuti Tahunan yang sudah <b>Disetujui</b> (jatah 12 hari per tahun).</li>
+          <li>Surat yang sudah <b>Disetujui</b> selalu tercetak sama walau template diubah kemudian.</li>
+          <li>Lupa kata sandi? Gunakan tautan pemulihan di halaman masuk.</li>
+        </ul>
       </div>
     </div>
   </section>

@@ -28,6 +28,7 @@
     document.querySelectorAll("[data-pane]").forEach(function (s) { s.hidden = s.dataset.pane !== name; });
     document.querySelectorAll("[data-tab]").forEach(function (a) { a.classList.toggle("active", a.dataset.tab === name); });
     if (name === "ajukan" && !editId) resetForm();
+    if (name === "ajukan") $("ttdReminder").hidden = !me || !!me.ttd_path;
   }
   document.querySelectorAll("[data-tab]").forEach(function (a) {
     a.addEventListener("click", function () { if (a.dataset.tab !== "ajukan") editId = null; tab(a.dataset.tab); });
