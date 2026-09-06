@@ -110,7 +110,7 @@
   }
 
   // ---- pengajuan ----
-  var SEL = "*, pemohon:profiles!pengajuan_pemohon_fkey(nip,nama,jabatan,unit,masa_kerja,ttd_path)";
+  var SEL = "*, pemohon:profiles!pengajuan_pemohon_fkey(nip,nama,jabatan,unit,masa_kerja,ttd_path,ttd_pos)";
   async function pengajuanSaya(){
     var r = await sb.from("pengajuan").select(SEL).order("created_at",{ascending:false});
     if(r.error) throw r.error; return r.data;

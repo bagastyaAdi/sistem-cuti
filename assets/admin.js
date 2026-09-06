@@ -173,6 +173,7 @@
     $("aJab").value = a.jabatan || ""; $("aNama").value = a.nama || ""; $("aNip").value = a.nip || "";
     $("chkLegal").checked = s.show_legal !== false;
     paintImg("ttdPrev", s.ttd_path); paintImg("ttdAtasanPrev", s.ttd_atasan_path); paintImg("capPrev", s.cap_path);
+    writePos(s.legal_pos);
     fillTemplate(s.template || {});
   }
 
@@ -206,13 +207,15 @@
     if (Object.keys(sec).length) t.sec = sec;
     return t;
   }
+  // Contoh surat SUDAH DISETUJUI — supaya pratinjau menampilkan TTD & cap,
+  // sehingga admin bisa menata posisinya.
   function contohPengajuan() {
     return {
       pemohon: { nama: "Nama Pegawai, S.Kom", nip: "199001012015011001", jabatan: "Pranata Komputer",
                  unit: "Dinas Komunikasi dan Informatika", masa_kerja: "10 Tahun" },
       jenis: "Tahunan", alasan: "Keperluan keluarga.", mulai: DB.todayISO(), selesai: DB.addDays(DB.todayISO(), 2),
-      alamat: "", telp: "08123456789", sisa_n: 12, dokumen: [], status: DB.STATUS.MENUNGGU,
-      nomor: "", tgl_ajukan: DB.todayISO(), tgl_surat: null,
+      alamat: "", telp: "08123456789", sisa_n: 12, dokumen: [], status: DB.STATUS.SETUJU,
+      nomor: "800.1.11.4/1616/Diskominfo", tgl_ajukan: DB.todayISO(), tgl_surat: DB.todayISO(),
     };
   }
   $("formTemplate").addEventListener("submit", async function (e) {
@@ -286,6 +289,53 @@
   $("ttdClear").onclick = function () { clearimg("ttd", "ttdPrev", "ttdFile"); };
   $("ttdAtasanClear").onclick = function () { clearimg("ttd_atasan", "ttdAtasanPrev", "ttdAtasanFile"); };
   $("capClear").onclick = function () { clearimg("cap", "capPrev", "capFile"); };
+
+  // ---- atur posisi TTD & cap ----
+  var POS_DEF = { dinas: { x: 40, y: 4, w: 150 }, bidang: { x: 40, y: 4, w: 150 }, cap: { x: -46, y: 0, w: 120 } };
+  function eachPosRow(fn) { document.querySelectorAll("#posCtl .posrow").forEach(fn); }
+  function readPos() {
+    var o = {};
+    eachPosRow(function (row) {
+      var v = {};
+      row.querySelectorAll("input[type=range]").forEach(function (r) { v[r.dataset.ax] = +r.value; });
+      o[row.dataset.slot] = v;
+    });
+    return o;
+  }
+  function writePos(lp) {
+    lp = lp || {};
+    eachPosRow(function (row) {
+      var slot = row.dataset.slot, cur = lp[slot] || {};
+      row.querySelectorAll("input[type=range]").forEach(function (r) {
+        var ax = r.dataset.ax;
+        r.value = cur[ax] != null ? cur[ax] : POS_DEF[slot][ax];
+      });
+    });
+  }
+  function renderPosPreview() {
+    var s = Object.assign({}, pengaturan, { legal_pos: readPos(), show_legal: true });
+    SURAT.render(SURAT.html(contohPengajuan(), s, collectTemplate()));
+  }
+  document.querySelectorAll("#posCtl input[type=range]").forEach(function (r) {
+    r.addEventListener("input", function () { if (!$("modal").hidden) renderPosPreview(); });
+    r.addEventListener("change", async function () {
+      var res = await DB.simpanPengaturan({ legal_pos: readPos() });
+      if (res.error) return alert("Gagal simpan posisi: " + res.error.message);
+      pengaturan = await DB.getPengaturan(true);
+    });
+  });
+  $("posPreview").onclick = function () {
+    renderPosPreview();
+    $("modalTitle").textContent = "Pratinjau Posisi TTD & Cap (contoh surat disetujui)";
+    $("dokBar").hidden = true; $("modalActions").innerHTML = "";
+    $("modal").hidden = false;
+  };
+  $("posReset").onclick = async function () {
+    writePos({});
+    await DB.simpanPengaturan({ legal_pos: {} });
+    pengaturan = await DB.getPengaturan(true);
+    if (!$("modal").hidden) renderPosPreview();
+  };
 
   function flash(form) {
     var s = document.createElement("span"); s.className = "hint"; s.style.color = "var(--ok)"; s.textContent = "  ✓ Tersimpan";

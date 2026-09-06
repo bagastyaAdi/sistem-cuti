@@ -153,8 +153,14 @@ table.data tr:last-child td{border-bottom:0}
 .paper table{border-collapse:collapse;width:100%}
 .paper td,.paper th{border:1px solid #111;padding:3px 6px;vertical-align:top;font-size:13px}
 .paper table.sec{margin-top:7px}
-.paper table.sec .sig{vertical-align:top;padding-top:4px}
-.paper table.sec .kosong{border-left:0;border-right:0;border-bottom:0}
+.paper table.sec .sig{vertical-align:top;padding:6px 8px}
+.paper .ttdblok{width:48%;margin-left:auto;text-align:center;line-height:1.4}
+.paper .ttdnama{text-decoration:underline}
+
+#posCtl .posrow{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-bottom:10px;font-size:12px}
+#posCtl .posrow b{width:100%}
+#posCtl .posrow label{display:flex;gap:6px;align-items:center;flex:1;min-width:150px}
+#posCtl .posrow input[type=range]{flex:1;min-width:80px}
 .paper .st{font-weight:700;font-size:13px}
 .paper .b{font-weight:700}
 .paper .ctr{text-align:center}

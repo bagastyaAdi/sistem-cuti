@@ -138,6 +138,19 @@
             </div>
           </div>
 
+          <div id="pTtdAtur" hidden>
+            <div class="section-title" style="margin-top:4px">Ukuran &amp; Posisi di Surat</div>
+            <div id="posCtl">
+              <div class="posrow" data-slot="pemohon">
+                <label>Ukuran <input type="range" data-ax="w" min="60" max="260" value="150"></label>
+                <label>Geser X <input type="range" data-ax="x" min="-40" max="180" value="0"></label>
+                <label>Geser Y <input type="range" data-ax="y" min="-20" max="80" value="2"></label>
+              </div>
+            </div>
+            <div id="pTtdLive" class="paperbox" style="background:#fff;min-height:90px;overflow:auto"></div>
+            <p class="hint" style="margin:6px 0 0">Tampilan di atas meniru kolom &ldquo;Hormat Saya&rdquo; pada surat. Perubahan tersimpan saat menekan <b>Simpan Profil</b>.</p>
+          </div>
+
           <p id="profilMsg" class="alert alert-ok" hidden>Profil tersimpan.</p>
           <button class="btn btn-primary" type="submit">Simpan Profil</button>
         </form>

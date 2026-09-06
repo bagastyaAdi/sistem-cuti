@@ -109,7 +109,34 @@
     $("pTtdPrev").innerHTML = me.ttd_path
       ? '<img src="' + esc(me.ttd_path) + '" style="max-height:64px">'
       : "belum ada";
+    writeTtdPos(me.ttd_pos); ttdLive();
   }
+
+  // ---- atur ukuran/posisi TTD pemohon (bagian VI) ----
+  var TTD_DEF = { w: 150, x: 0, y: 2 };
+  function readTtdPos() {
+    var v = {};
+    document.querySelectorAll("#pTtdAtur .posrow input[type=range]").forEach(function (r) { v[r.dataset.ax] = +r.value; });
+    return v;
+  }
+  function writeTtdPos(p) {
+    p = p || {};
+    document.querySelectorAll("#pTtdAtur .posrow input[type=range]").forEach(function (r) {
+      var a = r.dataset.ax; r.value = p[a] != null ? p[a] : TTD_DEF[a];
+    });
+  }
+  function ttdLive() {
+    if (!me.ttd_path) { $("pTtdAtur").hidden = true; return; }
+    $("pTtdAtur").hidden = false;
+    var q = readTtdPos();
+    $("pTtdLive").innerHTML = '<div style="color:#111;font-family:\'Times New Roman\',Georgia,serif;font-size:13px;text-align:center;width:62%;margin-left:auto;line-height:1.4">'
+      + "Hormat Saya,<br>"
+      + '<img src="' + esc(me.ttd_path) + '" style="display:block;position:relative;width:' + (q.w || 150) + "px;margin:" + (q.y != null ? q.y : 2) + "px auto 0;left:" + (q.x != null ? q.x : 0) + 'px">'
+      + "(" + esc(me.nama) + ")<br>NIP. " + esc(me.nip) + "</div>";
+  }
+  document.querySelectorAll("#pTtdAtur .posrow input[type=range]").forEach(function (r) {
+    r.addEventListener("input", ttdLive);
+  });
   $("pTtdFile").addEventListener("change", async function () {
     var f = this.files[0]; if (!f) return;
     if (f.size > 1.5 * 1024 * 1024) { alert("Ukuran maksimal 1,5 MB."); this.value = ""; return; }
@@ -120,13 +147,14 @@
       if (r.error) throw new Error(r.error.message);
       me.ttd_path = url;
       $("pTtdPrev").innerHTML = '<img src="' + esc(url) + '" style="max-height:64px">';
+      ttdLive();
     } catch (ex) { alert("Gagal: " + ex.message); $("pTtdPrev").innerHTML = "belum ada"; }
     this.value = "";
   });
   $("pTtdClear").onclick = async function () {
-    var r = await DB.updateProfil(me.id, { ttd_path: "" });
+    var r = await DB.updateProfil(me.id, { ttd_path: "", ttd_pos: {} });
     if (r.error) return alert("Gagal: " + r.error.message);
-    me.ttd_path = ""; $("pTtdPrev").innerHTML = "belum ada";
+    me.ttd_path = ""; me.ttd_pos = {}; $("pTtdPrev").innerHTML = "belum ada"; ttdLive();
   };
   function resetForm() {
     $("formCuti").reset();
@@ -178,7 +206,7 @@
         mulai: mulai, selesai: selesai, alamat: $("fAlamat").value, telp: $("fTelp").value,
         sisa_n: 12 - rows.filter(function (r) { return r.status === S.SETUJU && r.jenis === "Tahunan"; }).reduce(function (s, r) { return s + hari(r.mulai, r.selesai); }, 0),
         dokumen: docs,
-        pemohon: { nip: me.nip, nama: me.nama, jabatan: me.jabatan, unit: me.unit, masa_kerja: me.masa_kerja, ttd_path: me.ttd_path },
+        pemohon: { nip: me.nip, nama: me.nama, jabatan: me.jabatan, unit: me.unit, masa_kerja: me.masa_kerja, ttd_path: me.ttd_path, ttd_pos: me.ttd_pos },
         tgl_ajukan: editId ? (rows.find(function (r) { return r.id === editId; }) || {}).tgl_ajukan : DB.todayISO(),
         status: S.MENUNGGU, nomor: "", tgl_surat: null,
       };
@@ -220,10 +248,12 @@
   $("formProfil").addEventListener("submit", async function (e) {
     e.preventDefault();
     var btn = e.target.querySelector("button"); btn.disabled = true;
-    var r = await DB.updateProfil(me.id, {
+    var patch = {
       nama: $("pNama").value.trim(), jabatan: $("pJab").value.trim(), unit: $("pUnit").value.trim(),
       hp: $("pHp").value.trim(), masa_kerja: $("pMasa").value.trim(),
-    });
+    };
+    if (me.ttd_path) patch.ttd_pos = readTtdPos();
+    var r = await DB.updateProfil(me.id, patch);
     btn.disabled = false;
     if (r.error) { alert("Gagal menyimpan: " + r.error.message); return; }
     me = await DB.currentProfile();

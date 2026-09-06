@@ -103,14 +103,27 @@
       o = o || {};
       return "left:" + (o.x != null ? o.x : dx) + "px;top:" + (o.y != null ? o.y : dy) + "px;width:" + (o.w || dw) + "px";
     }
+    // Blok tanda tangan pejabat: rata di sisi kanan bagian, teks di tengah blok.
+    // Sisi kiri bagian dibiarkan kosong tanpa garis (seperti form asli).
     function sigArea(pej, tinggi, ttd, withCap, key) {
       var stamp = "";
       if (legal) {
-        if (withCap && cfg.cap_path) stamp += '<img alt="Cap" src="' + esc(cfg.cap_path) + '" style="position:absolute;opacity:.82;' + pos(POS.cap, -44, -4, 118) + '">';
-        if (ttd) stamp += '<img alt="TTD" src="' + esc(ttd) + '" style="position:absolute;' + pos(POS[key], 8, 2, 128) + '">';
+        if (withCap && cfg.cap_path) stamp += '<img alt="Cap" src="' + esc(cfg.cap_path) + '" style="position:absolute;opacity:.85;' + pos(POS.cap, -46, 0, 120) + '">';
+        if (ttd) stamp += '<img alt="TTD" src="' + esc(ttd) + '" style="position:absolute;' + pos(POS[key], 40, 4, 150) + '">';
       }
-      var gap = legal ? '<div style="position:relative;height:' + (tinggi - 30) + 'px;width:230px">' + stamp + "</div>" : "<br><br><br>";
-      return esc(pej.jabatan || "") + ",<br>" + gap + "(" + esc(pej.nama || "..............................") + ")<br>NIP. " + esc(pej.nip || "..............................");
+      var gap = legal ? '<div style="position:relative;height:' + (tinggi - 34) + 'px">' + stamp + "</div>" : "<br><br><br>";
+      return '<div class="ttdblok">' + esc(pej.jabatan || "") + ",<br>" + gap
+        + '<span class="ttdnama">(' + esc(pej.nama || "..............................") + ")</span><br>NIP. " + esc(pej.nip || "..............................")
+        + "</div>";
+    }
+
+    // Tanda tangan pemohon (bagian VI). Ukuran & geser diatur pegawai (m.ttd_pos = {w,x,y}).
+    function ttdPemohon(m) {
+      if (!m.ttd_path) return "<br><br><br>";
+      var q = m.ttd_pos || {};
+      return '<img alt="Tanda tangan pemohon" src="' + esc(m.ttd_path)
+        + '" style="display:block;position:relative;width:' + (q.w || 150) + "px;margin:"
+        + (q.y != null ? q.y : 2) + "px auto 0;left:" + (q.x != null ? q.x : 0) + 'px">';
     }
 
     var dok = (p.dokumen && p.dokumen.length)
@@ -149,12 +162,11 @@
 
       + '<table class="sec"><tr><td colspan="2" class="st">' + esc(T.sec["6"]) + "</td></tr>"
       + '<tr><td style="width:70%">' + esc(p.alamat || "(sesuai alamat domisili pada data kepegawaian)") + dok + "</td>"
-      + "<td>No. HP / TELP<br>" + esc(p.telp) + "<br><br>" + esc(T.penutup_pemohon) + "<br>"
-      + (m.ttd_path ? '<img alt="Tanda tangan pemohon" src="' + esc(m.ttd_path) + '" style="max-height:52px;max-width:150px;margin:2px 0">' : "<br><br><br>")
-      + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr></table>"
+      + '<td class="ctr">No. HP / TELP<br>' + esc(p.telp) + "<br><br>" + esc(T.penutup_pemohon) + "<br>"
+      + ttdPemohon(m) + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr></table>"
 
       + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" class="sig" style="height:104px;position:relative">' + (dec ? sigArea(pa, 74, cfg.ttd_atasan_path, false, "bidang") : "") + "</td></tr></table>"
+      + '<tr><td colspan="4" class="sig" style="height:120px;position:relative">' + (dec ? sigArea(pa, 86, cfg.ttd_atasan_path, false, "bidang") : "") + "</td></tr></table>"
 
       + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["8"]) + "</td></tr>" + decRow
       + '<tr><td colspan="4" class="sig" style="height:118px;position:relative">' + (dec ? sigArea(pk, 92, cfg.ttd_path, true, "dinas") : "") + "</td></tr></table>"

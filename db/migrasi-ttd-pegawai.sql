@@ -2,6 +2,7 @@
 -- Jalankan sekali di Supabase SQL Editor. Aman diulang.
 
 alter table public.profiles add column if not exists ttd_path text default '';
+alter table public.profiles add column if not exists ttd_pos  jsonb default '{}'::jsonb;  -- ukuran & geser TTD pegawai: {w,x,y}
 
 -- Pegawai menyimpan gambar TTD ke bucket "dokumen" pada folder <uid>/.
 -- INSERT sudah diizinkan kebijakan "pemohon unggah dokumen sendiri".
