@@ -158,6 +158,12 @@ table.data tr:last-child td{border-bottom:0}
 .paper .ttdblok{width:48%;margin-left:auto;text-align:center;line-height:1.4}
 .paper .ttdnama{text-decoration:underline}
 
+.peng-grid{display:grid;gap:14px}
+.peng-main{display:grid;gap:14px;align-content:start;min-width:0}
+@media(min-width:980px){
+  .peng-grid{grid-template-columns:minmax(0,1fr) 340px;align-items:start}
+  .peng-side{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+}
 .panduan-card>summary{cursor:pointer;font-weight:700;font-size:14px;padding:14px 16px;list-style:none}
 .panduan-card>summary::-webkit-details-marker{display:none}
 .panduan-card>summary::before{content:"▸ ";color:var(--muted)}
