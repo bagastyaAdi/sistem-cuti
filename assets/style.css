@@ -229,9 +229,9 @@ table.data tr:last-child td{border-bottom:0}
 .paper table{border-collapse:collapse;width:100%}
 .paper td,.paper th{border:1px solid #111;padding:3px 6px;vertical-align:top;font-size:13px}
 .paper table.sec{margin-top:7px}
-.paper table.sec .sig{vertical-align:top;padding:6px 8px}
+.paper table.sec .sig{vertical-align:top;padding:6px 8px;text-align:center}
 .paper .nbt{border:0}
-.paper .ttdblok{width:46%;margin-left:auto;text-align:center;line-height:1.4}
+.paper .ttdblok{text-align:center;line-height:1.4}
 .paper .ttdnama{text-decoration:underline}
 .doklink{color:var(--primary);text-decoration:underline;font-weight:600;white-space:nowrap}
 .paper .doklink{color:#1a56db}
