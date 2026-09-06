@@ -63,7 +63,7 @@ Situs statis — deploy folder ini apa adanya.
 | `assets/db.js` | Lapisan data Supabase |
 | `assets/surat.js` | Pembangun dokumen A4 + cetak |
 | `db/schema.sql` | Tabel, Row Level Security, RPC, bucket storage |
-| `db/migrasi-template.sql` | Migrasi: kolom `template` (teks surat editable) + snapshot |
+| `db/migrasi.sql` | Migrasi lengkap — jalankan sekali di project Supabase yang sudah ada (kolom template, TTD per pejabat, cap, posisi TTD/cap, TTD pegawai) |
 
 ## Template surat
 
