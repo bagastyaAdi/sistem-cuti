@@ -106,9 +106,9 @@ table.data tr:last-child td{border-bottom:0}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600;line-height:1.4}
 .badge::before{content:"";width:7px;height:7px;border-radius:999px;background:currentColor}
 .b-ok{color:var(--ok);background:var(--ok-bg)}
-.b-warn{color:var(--warn);background:var(--warn-bg)}
 .b-bad{color:var(--bad);background:var(--bad-bg)}
-.b-rev{color:var(--rev);background:var(--rev-bg)}
+/* Menunggu Verifikasi & Perlu Revisi: teks netral (hitam), tanpa warna mencolok */
+.b-warn,.b-rev{color:var(--text);background:var(--surface-2);border:1px solid var(--border)}
 
 /* Stat tiles */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}

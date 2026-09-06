@@ -95,15 +95,22 @@
   $("filterStatus").addEventListener("change", renderSemua);
 
   function renderPegawai() {
-    $("pegBody").innerHTML = pegawai.map(function (p) {
+    var q = ($("pegSearch").value || "").trim().toLowerCase();
+    var list = q
+      ? pegawai.filter(function (p) {
+          return [p.nip, p.nama, p.jabatan, p.unit].join(" ").toLowerCase().indexOf(q) >= 0;
+        })
+      : pegawai;
+    $("pegBody").innerHTML = list.map(function (p) {
       var toggle = p.id === me.id ? '<span class="muted">(Anda)</span>'
         : '<button class="btn btn-ghost btn-sm" data-role="' + (p.role === "admin" ? "pegawai" : "admin") + '" data-id="' + p.id + '">'
           + (p.role === "admin" ? "Jadikan Pegawai" : "Jadikan Admin") + '</button>';
       return '<tr><td class="tnum">' + esc(p.nip) + '</td><td>' + esc(p.nama) + '</td><td>' + esc(p.jabatan) + '</td>'
         + '<td>' + (p.role === "admin" ? '<span class="badge b-rev">Admin</span>' : '<span class="badge b-ok">Pegawai</span>') + '</td>'
         + '<td>' + toggle + '</td></tr>';
-    }).join("") || '<tr><td colspan="5" class="muted center" style="padding:24px">Belum ada pegawai terdaftar.</td></tr>';
+    }).join("") || '<tr><td colspan="5" class="muted center" style="padding:24px">' + (q ? "Tak ada yang cocok." : "Belum ada pegawai terdaftar.") + "</td></tr>";
   }
+  $("pegSearch").addEventListener("input", renderPegawai);
   $("pegBody").addEventListener("click", async function (e) {
     var b = e.target.closest("button[data-role]"); if (!b) return;
     if (!confirm("Ubah peran pegawai ini menjadi " + b.dataset.role + "?")) return;
@@ -190,12 +197,16 @@
     $("tCatatan").value = t.catatan_kaki || "";
     var sec = Object.assign({}, D.sec, t.sec || {});
     for (var i = 1; i <= 8; i++) $("tSec" + i).value = sec[i] || "";
+    for (var j = 1; j <= 6; j++) $("tJenis" + j).value = (t.jenis || [])[j - 1] || "";
   }
   function collectTemplate() {
     var lines = function (id) { return $(id).value.split("\n").map(function (x) { return x.trim(); }).filter(Boolean); };
     var sec = {};
     for (var i = 1; i <= 8; i++) { var v = $("tSec" + i).value.trim(); if (v) sec[i] = v; }
+    var jn = [], anyJ = false;
+    for (var j = 1; j <= 6; j++) { var jv = $("tJenis" + j).value.trim(); jn.push(jv); if (jv) anyJ = true; }
     var t = {};
+    if (anyJ) t.jenis = jn;
     var kb = lines("tKopBaris"); if (kb.length) t.kop_baris = kb;
     var ks = lines("tKopSub"); if (ks.length) t.kop_sub = ks;
     if ($("tLogo").value.trim()) t.logo_url = $("tLogo").value.trim();

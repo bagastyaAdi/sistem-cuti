@@ -21,6 +21,8 @@
     kota: "Mangupura",
     penutup_pemohon: "Hormat Saya,",
     catatan_kaki: "",
+    // Label 6 jenis cuti (bagian II & V). Urutan tetap — hanya teksnya bisa diubah admin.
+    jenis: ["Cuti Tahunan", "Cuti Besar", "Cuti Sakit", "Cuti Melahirkan", "Cuti Karena Alasan Penting", "Cuti di Luar Tanggungan Negara"],
     sec: {
       "1": "I. DATA PEGAWAI",
       "2": "II. JENIS CUTI YANG DIAMBIL",
@@ -37,10 +39,14 @@
     t = t || {};
     var o = JSON.parse(JSON.stringify(DEFAULT_TPL));
     Object.keys(DEFAULT_TPL).forEach(function (k) {
-      if (k === "sec") return;
+      if (k === "sec" || k === "jenis") return;
       if (t[k] != null && !(Array.isArray(t[k]) && t[k].length === 0) && t[k] !== "") o[k] = t[k];
     });
     o.sec = Object.assign({}, DEFAULT_TPL.sec, t.sec || {});
+    o.jenis = DEFAULT_TPL.jenis.map(function (d, i) {
+      var v = (t.jenis || [])[i];
+      return (v != null && v !== "") ? v : d;
+    });
     return o;
   }
 
@@ -85,10 +91,13 @@
       + T.kop_sub.map(function (b) { return '<div style="font-size:10.5px">' + esc(b) + "</div>"; }).join("")
       + "</div></div>";
 
+    var JKEY = ["Tahunan", "Besar", "Sakit", "Melahirkan", "Karena Alasan Penting", "Di Luar Tanggungan Negara"];
+    var JL = T.jenis;
+    function jcell(i) { return "<td>" + (i + 1) + ". " + esc(JL[i]) + '</td><td class="ctr">' + chk(J(JKEY[i])) + "</td>"; }
     var jenisRows =
-      '<tr><td>1. Cuti Tahunan</td><td class="ctr">' + chk(J("Tahunan")) + '</td><td>2. Cuti Besar</td><td class="ctr">' + chk(J("Besar")) + "</td></tr>"
-      + '<tr><td>3. Cuti Sakit</td><td class="ctr">' + chk(J("Sakit")) + '</td><td>4. Cuti Melahirkan</td><td class="ctr">' + chk(J("Melahirkan")) + "</td></tr>"
-      + '<tr><td>5. Cuti Karena Alasan Penting</td><td class="ctr">' + chk(J("Karena Alasan Penting")) + '</td><td>6. Cuti di Luar Tanggungan Negara</td><td class="ctr">' + chk(J("Di Luar Tanggungan Negara")) + "</td></tr>";
+      "<tr>" + jcell(0) + jcell(1) + "</tr>"
+      + "<tr>" + jcell(2) + jcell(3) + "</tr>"
+      + "<tr>" + jcell(4) + jcell(5) + "</tr>";
 
     // baris label keputusan + baris tanda centang (dipisah, seperti form asli)
     var decRow =
@@ -156,10 +165,10 @@
       + '<td style="width:16%">Mulai Tanggal</td><td>' + fmtID(p.mulai) + " s/d " + fmtID(p.selesai) + "</td></tr></table>"
 
       + '<table class="sec"><tr><td colspan="2" class="st">' + esc(T.sec["5"]) + "</td></tr>"
-      + '<tr><td style="width:60%">1. Cuti Tahunan &mdash; sisa tahun berjalan (N)</td><td class="tnum">' + esc(p.sisa_n) + "</td></tr>"
-      + '<tr><td>2. Cuti Besar</td><td class="tnum">0</td></tr><tr><td>3. Cuti Sakit</td><td class="tnum">0</td></tr>'
-      + '<tr><td>4. Cuti Melahirkan</td><td class="tnum">0</td></tr><tr><td>5. Cuti Karena Alasan Penting</td><td class="tnum">0</td></tr>'
-      + '<tr><td>6. Cuti di Luar Tanggungan Negara</td><td class="tnum">0</td></tr></table>'
+      + '<tr><td style="width:60%">1. ' + esc(JL[0]) + ' &mdash; sisa tahun berjalan (N)</td><td class="tnum">' + esc(p.sisa_n) + "</td></tr>"
+      + '<tr><td>2. ' + esc(JL[1]) + '</td><td class="tnum">0</td></tr><tr><td>3. ' + esc(JL[2]) + '</td><td class="tnum">0</td></tr>'
+      + '<tr><td>4. ' + esc(JL[3]) + '</td><td class="tnum">0</td></tr><tr><td>5. ' + esc(JL[4]) + '</td><td class="tnum">0</td></tr>'
+      + '<tr><td>6. ' + esc(JL[5]) + '</td><td class="tnum">0</td></tr></table>'
 
       + '<table class="sec"><tr><td colspan="2" class="st">' + esc(T.sec["6"]) + "</td></tr>"
       + '<tr><td style="width:70%">' + esc(p.alamat || "(sesuai alamat domisili pada data kepegawaian)") + dok + "</td>"
