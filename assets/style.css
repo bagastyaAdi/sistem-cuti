@@ -281,14 +281,20 @@ details.bagian .field{margin-bottom:10px}
 @media print{
   @page{size:A4 portrait;margin:12mm}
   html,body{background:#fff}
-  body *{visibility:hidden}
-  #printArea,#printArea *{visibility:visible}
-  #printArea{position:absolute;left:0;top:0;width:186mm;height:auto !important;overflow:visible !important}
-  /* Surat dikunci lebar A4 (186mm = A4 - margin 12mm) supaya proporsi & pemenggalan halaman selalu A4 */
-  #printArea .paper{transform:none !important;width:186mm !important;padding:0;margin:0;font-size:11.5px}
+  /* Tampilkan HANYA surat, mengalir normal (paginasi antar-halaman A4 otomatis) */
+  .layout,.sb-backdrop,.crop-ov{display:none !important}
+  #modal[hidden]{display:block !important}
+  #modal{position:static !important;inset:auto;background:none;padding:0;overflow:visible;display:block !important}
+  #modal .modal{max-width:none;width:auto;border:0;box-shadow:none;animation:none;background:none}
+  #modal .modal-h,#modalActions,#dokBar{display:none !important}
+  #modal .modal-b{padding:0}
+  .paperbox{background:none;padding:0;overflow:visible !important}
+  #printArea{overflow:visible !important}
+  /* Surat: lebar A4 (186mm = A4 − margin 12mm) */
+  #printArea .paper{transform:none !important;width:186mm !important;min-height:0;margin:0;padding:0;
+    box-shadow:none;font-size:11.5px}
   #printArea .paper td,#printArea .paper th{font-size:11px;padding:2px 5px}
-  #printArea .paper table.sec{margin-top:4px}
+  #printArea .paper table.sec{margin-top:4px;page-break-inside:avoid}
   #printArea .paper .sig{page-break-inside:avoid}
   #printArea .paper img{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  .paperbox{background:none;padding:0;overflow:visible !important}
 }
