@@ -35,7 +35,8 @@ a{color:var(--primary);text-decoration:none}
 .muted{color:var(--muted)}
 .tnum{font-variant-numeric:tabular-nums}
 .center{text-align:center}
-.wrap{max-width:900px;margin:0 auto;padding:16px;padding-top:max(16px,env(safe-area-inset-top))}
+.wrap{flex:1 1 0;min-width:0;width:100%;max-width:920px;margin:0 auto;padding:16px;padding-top:max(16px,env(safe-area-inset-top))}
+.wrap>section{min-width:0}
 .stack{display:grid;gap:16px}
 .row{display:flex;gap:10px;align-items:center}
 .spread{display:flex;gap:10px;align-items:center;justify-content:space-between}
@@ -68,7 +69,7 @@ a{color:var(--primary);text-decoration:none}
 }
 
 /* Cards / sections — irama jarak seragam di seluruh aplikasi */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);width:100%}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);width:100%;min-width:0}
 .card-h{padding:16px 20px;border-bottom:1px solid var(--border);font-weight:700;font-size:15px}
 .card-b{padding:20px}
 .card>.list,.card>.tablewrap{padding:0}
@@ -97,6 +98,8 @@ input[type=checkbox],input[type=radio]{width:auto;accent-color:var(--primary)}
 input[type=file]{padding:8px;font-size:13px}
 textarea{min-height:76px;resize:vertical}
 @media(min-width:560px){ .field-2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px} }
+.field-2>*{min-width:0}
+input,select,textarea{min-width:0}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-weight:600;font-size:14px;
