@@ -169,11 +169,19 @@
       + '<tr><td style="width:12%">Selama</td><td style="width:20%">' + hari(p.mulai, p.selesai) + " (hari)</td>"
       + '<td style="width:16%">Mulai Tanggal</td><td>' + fmtID(p.mulai) + " s/d " + fmtID(p.selesai) + "</td></tr></table>"
 
-      + '<table class="sec"><tr><td colspan="2" class="st">' + esc(T.sec["5"]) + "</td></tr>"
-      + '<tr><td style="width:60%">1. ' + esc(JL[0]) + ' &mdash; sisa tahun berjalan (N)</td><td class="tnum">' + esc(p.sisa_n) + "</td></tr>"
-      + '<tr><td>2. ' + esc(JL[1]) + '</td><td class="tnum">0</td></tr><tr><td>3. ' + esc(JL[2]) + '</td><td class="tnum">0</td></tr>'
-      + '<tr><td>4. ' + esc(JL[3]) + '</td><td class="tnum">0</td></tr><tr><td>5. ' + esc(JL[4]) + '</td><td class="tnum">0</td></tr>'
-      + '<tr><td>6. ' + esc(JL[5]) + '</td><td class="tnum">0</td></tr></table>'
+      // Bagian V: kiri = rincian Cuti Tahunan (Tahun/Sisa/Keterangan untuk N-2, N-1, N);
+      // kanan = jenis cuti 2-6 dengan kolom jumlah. 6 kolom, 5 baris sejajar kiri-kanan.
+      + '<table class="sec"><tr><td colspan="6" class="st">' + esc(T.sec["5"]) + "</td></tr>"
+      + '<tr><td colspan="3" style="width:46%">1. ' + esc(JL[0]) + '</td>'
+      + '<td colspan="2">2. ' + esc(JL[1]) + '</td><td class="tnum" style="width:8%">0</td></tr>'
+      + '<tr><td class="ctr" style="width:11%">Tahun</td><td class="ctr" style="width:11%">Sisa</td><td class="ctr" style="width:24%">Keterangan</td>'
+      + '<td colspan="2">3. ' + esc(JL[2]) + '</td><td class="tnum">0</td></tr>'
+      + '<tr><td class="ctr">N-2</td><td class="ctr tnum">0</td><td></td>'
+      + '<td colspan="2">4. ' + esc(JL[3]) + '</td><td class="tnum">0</td></tr>'
+      + '<tr><td class="ctr">N-1</td><td class="ctr tnum">0</td><td></td>'
+      + '<td colspan="2">5. ' + esc(JL[4]) + '</td><td class="tnum">0</td></tr>'
+      + '<tr><td class="ctr">N</td><td class="ctr tnum">' + esc(p.sisa_n) + '</td><td></td>'
+      + '<td colspan="2">6. ' + esc(JL[5]) + '</td><td class="tnum">0</td></tr></table>'
 
       + '<table class="sec"><tr><td colspan="2" class="st">' + esc(T.sec["6"]) + "</td></tr>"
       + '<tr><td style="width:70%">' + esc(p.alamat || "(sesuai alamat domisili pada data kepegawaian)") + dok + "</td>"
