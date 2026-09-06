@@ -17,7 +17,7 @@
     ],
     logo_url: "",
     judul: "FORMULIR PERMINTAAN DAN PEMBERIAN CUTI",
-    ditujukan: "Yth. Kepala Dinas Komunikasi dan Informatika Kabupaten Badung",
+    ditujukan: "Yth. Kepala Dinas Komunikasi dan Informatika",
     kota: "Mangupura",
     penutup_pemohon: "Hormat Saya,",
     catatan_kaki: "",
