@@ -102,12 +102,18 @@
       + "<tr>" + jcell(2) + jcell(3) + "</tr>"
       + "<tr>" + jcell(4) + jcell(5) + "</tr>";
 
-    // baris label keputusan + baris tanda centang (dipisah, seperti form asli)
+    // Bagian VII/VIII: baris label + baris centang (kolom 1-3), kolom 4 = sel TTD
+    // memanjang ke bawah (rowspan). Sisi kiri di bawah centang dibiarkan terbuka
+    // tanpa garis dalam — persis form asli.
     var K = T.keputusan;
-    var decRow =
-      '<tr><td class="ctr b" style="width:16%">' + esc(K[0]) + '</td><td class="ctr b" style="width:20%">' + esc(K[1]) + "</td>"
-      + '<td class="ctr b" style="width:22%">' + esc(K[2]) + '</td><td class="ctr b">' + esc(K[3]) + "</td></tr>"
-      + '<tr><td class="ctr" style="height:22px">' + chk(dec === "ok") + '</td><td></td><td></td><td class="ctr">' + chk(dec === "no") + "</td></tr>";
+    function keputusanRows(tinggi, sigHTML) {
+      return '<tr><td class="ctr b" style="width:16%">' + esc(K[0]) + '</td><td class="ctr b" style="width:20%">' + esc(K[1]) + "</td>"
+        + '<td class="ctr b" style="width:22%">' + esc(K[2]) + '</td><td class="ctr b">' + esc(K[3]) + "</td></tr>"
+        + '<tr><td class="ctr nbb" style="height:24px">' + chk(dec === "ok") + '</td><td class="nbb"></td><td class="nbb"></td>'
+        + '<td rowspan="2" class="sig" style="height:' + tinggi + 'px;position:relative">'
+        + (chk(dec === "no") ? '<div class="ctr">' + chk(dec === "no") + "</div>" : "") + sigHTML + "</td></tr>"
+        + '<tr><td colspan="3" class="nbt"></td></tr>';
+    }
 
     // ttd = gambar tanda tangan pejabat ini; withCap = tempel cap dinas (hanya Kepala Dinas / bagian VIII);
     // key = slot posisi ('dinas' | 'bidang') untuk offset yang diatur admin (cfg.legal_pos)
@@ -195,11 +201,11 @@
       + '<td class="ctr">No. HP / TELP<br>' + esc(p.telp) + "<br><br>" + esc(T.penutup_pemohon) + "<br>"
       + ttdPemohon(m) + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr></table>"
 
-      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" class="sig" style="height:120px;position:relative">' + (dec ? sigArea(pa, 86, cfg.ttd_atasan_path, false, "bidang") : "") + "</td></tr></table>"
+      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>"
+      + keputusanRows(132, dec ? sigArea(pa, 100, cfg.ttd_atasan_path, false, "bidang") : "") + "</table>"
 
-      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["8"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" class="sig" style="height:118px;position:relative">' + (dec ? sigArea(pk, 92, cfg.ttd_path, true, "dinas") : "") + "</td></tr></table>"
+      + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["8"]) + "</td></tr>"
+      + keputusanRows(140, dec ? sigArea(pk, 108, cfg.ttd_path, true, "dinas") : "") + "</table>"
 
       + (T.catatan_kaki ? '<div style="margin-top:8px;font-size:11px">' + esc(T.catatan_kaki) + "</div>" : "")
       + '<div style="margin-top:8px;font-size:11px;color:#555">' + catatanStatus(p) + "</div>"
