@@ -125,6 +125,17 @@
             <div class="field"><label for="pHp">Nomor HP</label><input id="pHp" inputmode="tel" required></div>
             <div class="field"><label for="pMasa">Masa Kerja</label><input id="pMasa"></div>
           </div>
+
+          <div class="section-title" style="margin-top:8px">Tanda Tangan</div>
+          <p class="hint" style="margin:-4px 0 8px">Foto/scan tanda tangan Anda (PNG latar transparan lebih baik). Muncul di bagian VI surat pada kolom &ldquo;Hormat Saya&rdquo;.</p>
+          <div class="field">
+            <div id="pTtdPrev" class="paperbox center" style="min-height:80px;display:grid;place-items:center;background:#fff">belum ada</div>
+            <div class="row" style="margin-top:6px">
+              <input id="pTtdFile" type="file" accept="image/*">
+              <button type="button" class="btn btn-ghost btn-sm" id="pTtdClear">Hapus</button>
+            </div>
+          </div>
+
           <p id="profilMsg" class="alert alert-ok" hidden>Profil tersimpan.</p>
           <button class="btn btn-primary" type="submit">Simpan Profil</button>
         </form>

@@ -110,7 +110,7 @@
   }
 
   // ---- pengajuan ----
-  var SEL = "*, pemohon:profiles!pengajuan_pemohon_fkey(nip,nama,jabatan,unit,masa_kerja)";
+  var SEL = "*, pemohon:profiles!pengajuan_pemohon_fkey(nip,nama,jabatan,unit,masa_kerja,ttd_path)";
   async function pengajuanSaya(){
     var r = await sb.from("pengajuan").select(SEL).order("created_at",{ascending:false});
     if(r.error) throw r.error; return r.data;
@@ -163,6 +163,13 @@
     if(up.error) throw up.error;
     return { name: file.name, path: path };
   }
+  async function uploadTtdPegawai(uid, file){
+    var ext=(file.name.split(".").pop()||"png").toLowerCase();
+    var path = uid + "/ttd-" + Date.now() + "." + ext;
+    var up = await sb.storage.from("dokumen").upload(path, file, { upsert:true });
+    if(up.error) throw up.error;
+    return sb.storage.from("dokumen").getPublicUrl(path).data.publicUrl;
+  }
 
   window.DB = {
     configured: configured, sb: sb, STATUS: STATUS, badge: badge,
@@ -173,6 +180,6 @@
     getPengaturan:getPengaturan, simpanPengaturan:simpanPengaturan, uploadLegal:uploadLegal,
     pengajuanSaya:pengajuanSaya, semuaPengajuan:semuaPengajuan, buatPengajuan:buatPengajuan,
     revisiKirimUlang:revisiKirimUlang, mintaRevisi:mintaRevisi, tolak:tolak, setujuiTerbitkan:setujuiTerbitkan,
-    uploadDokumen:uploadDokumen, docUrl:docUrl,
+    uploadDokumen:uploadDokumen, uploadTtdPegawai:uploadTtdPegawai, docUrl:docUrl,
   };
 })();

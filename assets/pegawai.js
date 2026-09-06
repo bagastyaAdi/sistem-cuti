@@ -105,7 +105,28 @@
     $("fNip").value = me.nip; $("fNama").value = me.nama; $("fJab").value = me.jabatan; $("fUnit").value = me.unit;
     $("pNip").value = me.nip; $("pNama").value = me.nama; $("pJab").value = me.jabatan;
     $("pUnit").value = me.unit; $("pHp").value = me.hp; $("pMasa").value = me.masa_kerja || "";
+    $("pTtdPrev").innerHTML = me.ttd_path
+      ? '<img src="' + esc(me.ttd_path) + '" style="max-height:64px">'
+      : "belum ada";
   }
+  $("pTtdFile").addEventListener("change", async function () {
+    var f = this.files[0]; if (!f) return;
+    if (f.size > 1.5 * 1024 * 1024) { alert("Ukuran maksimal 1,5 MB."); this.value = ""; return; }
+    $("pTtdPrev").innerHTML = '<span class="muted">mengunggah…</span>';
+    try {
+      var url = await DB.uploadTtdPegawai(me.id, f);
+      var r = await DB.updateProfil(me.id, { ttd_path: url });
+      if (r.error) throw new Error(r.error.message);
+      me.ttd_path = url;
+      $("pTtdPrev").innerHTML = '<img src="' + esc(url) + '" style="max-height:64px">';
+    } catch (ex) { alert("Gagal: " + ex.message); $("pTtdPrev").innerHTML = "belum ada"; }
+    this.value = "";
+  });
+  $("pTtdClear").onclick = async function () {
+    var r = await DB.updateProfil(me.id, { ttd_path: "" });
+    if (r.error) return alert("Gagal: " + r.error.message);
+    me.ttd_path = ""; $("pTtdPrev").innerHTML = "belum ada";
+  };
   function resetForm() {
     $("formCuti").reset();
     $("fNip").value = me.nip; $("fNama").value = me.nama; $("fJab").value = me.jabatan; $("fUnit").value = me.unit;
@@ -156,7 +177,7 @@
         mulai: mulai, selesai: selesai, alamat: $("fAlamat").value, telp: $("fTelp").value,
         sisa_n: 12 - rows.filter(function (r) { return r.status === S.SETUJU && r.jenis === "Tahunan"; }).reduce(function (s, r) { return s + hari(r.mulai, r.selesai); }, 0),
         dokumen: docs,
-        pemohon: { nip: me.nip, nama: me.nama, jabatan: me.jabatan, unit: me.unit, masa_kerja: me.masa_kerja },
+        pemohon: { nip: me.nip, nama: me.nama, jabatan: me.jabatan, unit: me.unit, masa_kerja: me.masa_kerja, ttd_path: me.ttd_path },
         tgl_ajukan: editId ? (rows.find(function (r) { return r.id === editId; }) || {}).tgl_ajukan : DB.todayISO(),
         status: S.MENUNGGU, nomor: "", tgl_surat: null,
       };

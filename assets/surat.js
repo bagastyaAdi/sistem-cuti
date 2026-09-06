@@ -133,7 +133,9 @@
 
       + '<table style="border-top:0"><tr><td colspan="2" class="st">' + esc(T.sec["6"]) + "</td></tr>"
       + '<tr><td style="width:70%">' + esc(p.alamat || "(sesuai alamat domisili pada data kepegawaian)") + dok + "</td>"
-      + "<td>No. HP / TELP<br>" + esc(p.telp) + "<br><br>" + esc(T.penutup_pemohon) + "<br><br><br>(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr></table>"
+      + "<td>No. HP / TELP<br>" + esc(p.telp) + "<br><br>" + esc(T.penutup_pemohon) + "<br>"
+      + (m.ttd_path ? '<img alt="Tanda tangan pemohon" src="' + esc(m.ttd_path) + '" style="max-height:52px;max-width:150px;margin:2px 0">' : "<br><br><br>")
+      + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr></table>"
 
       + '<table style="border-top:0"><tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>" + decRow
       + '<tr><td colspan="4" style="height:96px;position:relative">' + (dec ? sigArea(pa, 70) : "") + "</td></tr></table>"

@@ -12,6 +12,7 @@ create table if not exists public.profiles (
   unit        text default 'Dinas Komunikasi dan Informatika',
   hp          text default '',
   masa_kerja  text default '',
+  ttd_path    text default '',   -- gambar tanda tangan pegawai (bagian VI surat)
   role        text not null default 'pegawai' check (role in ('pegawai','admin')),
   created_at  timestamptz default now()
 );
