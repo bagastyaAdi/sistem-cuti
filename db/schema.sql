@@ -174,6 +174,10 @@ create policy "dokumen dibaca publik" on storage.objects
 drop policy if exists "pemohon unggah dokumen sendiri" on storage.objects;
 create policy "pemohon unggah dokumen sendiri" on storage.objects
   for insert with check (bucket_id = 'dokumen' and (storage.foldername(name))[1] = auth.uid()::text);
+drop policy if exists "pemohon perbarui berkas sendiri" on storage.objects;
+create policy "pemohon perbarui berkas sendiri" on storage.objects
+  for update using (bucket_id = 'dokumen' and (storage.foldername(name))[1] = auth.uid()::text)
+  with check (bucket_id = 'dokumen' and (storage.foldername(name))[1] = auth.uid()::text);
 
 -- ---------- HAK AKSES ROLE (WAJIB — kalau lewat: error 42501 "permission denied for table") ----------
 grant usage on schema public to anon, authenticated;
