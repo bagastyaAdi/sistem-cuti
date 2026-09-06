@@ -8,25 +8,30 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<header class="appbar">
-  <span class="brand"><img src="logo-badung.png" alt=""><span>Sistem Cuti<br><span class="sub">Portal Kepegawaian</span></span></span>
-  <span class="grow"></span>
-  <button id="btnTheme" class="iconbtn" title="Ganti tema" aria-label="Ganti tema"><span id="themeIco">&#9788;</span></button>
-  <div class="avatar" id="avatar">?</div>
-  <button id="btnLogout" class="iconbtn" title="Keluar" aria-label="Keluar">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-  </button>
-</header>
-
-<nav class="tabbar">
-  <a data-tab="beranda" class="active">Beranda</a>
-  <a data-tab="antrean">Antrean Verifikasi</a>
-  <a data-tab="semua">Semua Pengajuan</a>
-  <a data-tab="pegawai">Data Pegawai</a>
-  <a data-tab="pengaturan">Pengaturan</a>
-</nav>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><img src="logo-badung.png" alt=""><span>Sistem Cuti<br><span class="sub">Portal Kepegawaian</span></span></div>
+  <nav class="sb-nav">
+    <a data-tab="beranda" class="active">Beranda</a>
+    <a data-tab="antrean">Antrean Verifikasi</a>
+    <a data-tab="semua">Semua Pengajuan</a>
+    <a data-tab="pegawai">Data Pegawai</a>
+    <a data-tab="pengaturan">Pengaturan</a>
+    <a data-tab="panduan">Panduan</a>
+  </nav>
+  <div class="sb-foot">
+    <div class="avatar" id="avatar">?</div>
+    <span class="grow"></span>
+    <button id="btnTheme" class="iconbtn" title="Ganti tema" aria-label="Ganti tema"><span id="themeIco">&#9788;</span></button>
+    <button id="btnLogout" class="iconbtn" title="Keluar" aria-label="Keluar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+    </button>
+  </div>
+</aside>
+<div class="sb-backdrop" id="sbBackdrop"></div>
 
 <main class="wrap">
+  <button class="sb-toggle" id="sbToggle" aria-label="Menu">&#9776;</button>
   <div id="loading" class="loading"><div class="spin"></div></div>
 
   <!-- BERANDA -->
@@ -95,8 +100,7 @@
   </section>
 
   <!-- PENGATURAN -->
-  <section data-pane="pengaturan" hidden class="peng-grid">
-    <div class="peng-main">
+  <section data-pane="pengaturan" hidden class="stack">
     <form id="formNomor" class="card"><div class="card-b">
       <div class="section-title">Penomoran Surat</div>
       <p class="hint" style="margin:0 0 10px">Placeholder: <code>{no}</code> nomor urut · <code>{no3}</code> 3 digit · <code>{bulan}</code> bulan romawi · <code>{tahun}</code>. Naik +1 otomatis setiap surat disetujui.</p>
@@ -264,10 +268,12 @@
         <button class="btn btn-ghost" type="button" id="tReset">Kembalikan ke Bawaan</button>
       </div>
     </div></form>
-    </div><!-- /peng-main -->
+  </section>
 
-    <aside class="peng-side">
-      <details class="card panduan-card" open><summary>Panduan Pengaturan</summary>
+  <!-- PANDUAN -->
+  <section data-pane="panduan" hidden class="stack">
+      <div class="card">
+        <div class="card-h">Panduan Pengaturan</div>
         <div class="card-b pedoman">
           <div class="section-title">Penomoran Surat</div>
           <p>Isi <b>Format nomor</b> memakai kode yang otomatis diganti saat surat disetujui:</p>
@@ -301,10 +307,10 @@
           </ul>
           <p class="hint">Perubahan berlaku untuk surat yang <b>belum disetujui</b>. Surat yang sudah terbit memakai salinan template saat penerbitannya.</p>
         </div>
-      </details>
-    </aside>
+      </div>
   </section>
 </main>
+</div><!-- /layout -->
 
 <div id="modal" class="overlay" hidden>
   <div class="modal" style="max-width:920px">

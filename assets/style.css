@@ -37,21 +37,30 @@ a{color:var(--primary);text-decoration:none}
 .spread{display:flex;gap:10px;align-items:center;justify-content:space-between}
 .grow{flex:1;min-width:0}
 
-/* App shell */
-.appbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--surface) 88%,transparent);
-  backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:12px;padding:10px 16px}
-.appbar .brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
-.appbar .brand img{height:26px;width:auto;object-fit:contain;flex:none}
-.appbar .sub{font-size:11px;color:var(--muted);font-weight:500}
-.appbar .avatar{width:34px;height:34px;border-radius:8px;background:var(--nav);color:#fff;
-  display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
-.appbar .iconbtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);
-  color:var(--text);display:grid;place-items:center;cursor:pointer}
+/* App shell — sidebar kiri */
+.layout{display:flex;min-height:100dvh}
+.sidebar{width:216px;flex:none;background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;position:sticky;top:0;height:100dvh}
+.sb-brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:16px 14px;border-bottom:1px solid var(--border)}
+.sb-brand img{height:26px;width:auto;object-fit:contain;flex:none}
+.sb-brand .sub{font-size:11px;color:var(--muted);font-weight:500}
+.sb-nav{display:flex;flex-direction:column;gap:2px;padding:8px;flex:1;overflow-y:auto}
+.sb-nav a{padding:10px 12px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer}
+.sb-nav a:hover{background:var(--surface-2)}
+.sb-nav a.active{background:var(--nav);color:#fff}
+.sb-foot{display:flex;align-items:center;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.sb-foot .avatar{width:34px;height:34px;border-radius:8px;background:var(--nav);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.sb-foot .iconbtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);display:grid;place-items:center;cursor:pointer}
+.sb-foot .grow{flex:1;min-width:0}
+.sb-toggle{display:none}
+.sb-backdrop{display:none}
 
-.tabbar{display:flex;gap:4px;padding:0 12px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto}
-.tabbar a{padding:11px 12px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
-.tabbar a.active{color:var(--text);border-bottom-color:var(--primary)}
+@media(max-width:860px){
+  .sidebar{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform .2s ease}
+  .sidebar.open{transform:none;box-shadow:var(--shadow)}
+  .sb-toggle{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:18px;margin-bottom:12px}
+  .sb-backdrop.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55}
+}
 
 /* Cards / sections */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
@@ -157,18 +166,6 @@ table.data tr:last-child td{border-bottom:0}
 .paper table.sec .sig{vertical-align:top;padding:6px 8px}
 .paper .ttdblok{width:48%;margin-left:auto;text-align:center;line-height:1.4}
 .paper .ttdnama{text-decoration:underline}
-
-.peng-grid{display:grid;gap:14px}
-.peng-main{display:grid;gap:14px;align-content:start;min-width:0}
-@media(min-width:980px){
-  .peng-grid{grid-template-columns:minmax(0,1fr) 340px;align-items:start}
-  .peng-side{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
-}
-.panduan-card>summary{cursor:pointer;font-weight:700;font-size:14px;padding:14px 16px;list-style:none}
-.panduan-card>summary::-webkit-details-marker{display:none}
-.panduan-card>summary::before{content:"▸ ";color:var(--muted)}
-.panduan-card[open]>summary::before{content:"▾ "}
-.panduan-card .pedoman{padding-top:0}
 
 details.bagian{border:1px solid var(--border);border-radius:8px;margin-bottom:8px;padding:4px 12px}
 details.bagian>summary{cursor:pointer;font-size:13px;font-weight:600;padding:8px 0}

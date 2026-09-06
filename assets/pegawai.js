@@ -30,9 +30,12 @@
     if (name === "ajukan" && !editId) resetForm();
     if (name === "ajukan") $("ttdReminder").hidden = !me || !!me.ttd_path;
   }
+  function sb(open) { $("sidebar").classList.toggle("open", open); $("sbBackdrop").classList.toggle("open", open); }
   document.querySelectorAll("[data-tab]").forEach(function (a) {
-    a.addEventListener("click", function () { if (a.dataset.tab !== "ajukan") editId = null; tab(a.dataset.tab); });
+    a.addEventListener("click", function () { if (a.dataset.tab !== "ajukan") editId = null; tab(a.dataset.tab); sb(false); });
   });
+  $("sbToggle").onclick = function () { sb(!$("sidebar").classList.contains("open")); };
+  $("sbBackdrop").onclick = function () { sb(false); };
   $("btnAjukan1").onclick = function () { editId = null; tab("ajukan"); };
   $("btnAjukan2").onclick = function () { editId = null; tab("ajukan"); };
 

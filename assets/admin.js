@@ -27,9 +27,12 @@
     document.querySelectorAll("[data-pane]").forEach(function (s) { s.hidden = s.dataset.pane !== name; });
     document.querySelectorAll("[data-tab]").forEach(function (a) { a.classList.toggle("active", a.dataset.tab === name); });
   }
+  function sb(open) { $("sidebar").classList.toggle("open", open); $("sbBackdrop").classList.toggle("open", open); }
   document.querySelectorAll("[data-tab]").forEach(function (a) {
-    a.addEventListener("click", function () { tab(a.dataset.tab); });
+    a.addEventListener("click", function () { tab(a.dataset.tab); sb(false); });
   });
+  $("sbToggle").onclick = function () { sb(!$("sidebar").classList.contains("open")); };
+  $("sbBackdrop").onclick = function () { sb(false); };
 
   (async function init() {
     me = await DB.currentProfile();
