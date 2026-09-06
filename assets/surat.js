@@ -109,8 +109,12 @@
 
     return '<div class="paper">'
       + kop
-      + '<table class="nb" style="margin-bottom:10px"><tr><td style="width:55%"></td>'
-      + "<td>" + esc(T.kota) + ", " + (p.tgl_ajukan ? fmtID(p.tgl_ajukan) : "........................") + "<br>Kepada<br>" + esc(T.ditujukan) + "<br>di -<br>&nbsp;&nbsp;&nbsp;&nbsp;" + esc(T.kota) + "</td></tr></table>"
+      + '<div class="alamat">'
+      +   esc(T.kota) + ", " + (p.tgl_ajukan ? fmtID(p.tgl_ajukan) : "........................") + "<br>"
+      +   "Kepada<br>"
+      +   esc(T.ditujukan) + "<br>"
+      +   '<span class="di">di-<br><span class="tmp">' + esc(T.kota) + "</span></span>"
+      + "</div>"
       + '<div class="ctr b" style="text-decoration:underline;font-size:14px">' + esc(T.judul) + "</div>"
       + '<div class="ctr" style="margin-bottom:10px">Nomor : ' + esc(p.nomor || ".................../Diskominfo") + "</div>"
 
