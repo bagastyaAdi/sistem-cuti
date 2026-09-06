@@ -118,34 +118,43 @@
       + '<div class="ctr b" style="text-decoration:underline;font-size:14px">' + esc(T.judul) + "</div>"
       + '<div class="ctr" style="margin-bottom:10px">Nomor : ' + esc(p.nomor || ".................../Diskominfo") + "</div>"
 
-      + '<table><tr><td colspan="4" class="st">' + esc(T.sec["1"]) + "</td></tr>"
-      + '<tr><td style="width:22%">Nama</td><td style="width:38%">' + esc(m.nama) + '</td><td style="width:15%">NIP</td><td class="tnum">' + esc(m.nip) + "</td></tr>"
+      + '<table class="isi">'
+      + '<colgroup><col style="width:18%"><col style="width:32%"><col style="width:20%"><col style="width:30%"></colgroup>'
+
+      + '<tr><td colspan="4" class="st">' + esc(T.sec["1"]) + "</td></tr>"
+      + "<tr><td>Nama</td><td>" + esc(m.nama) + "</td><td>NIP</td><td class=\"tnum\">" + esc(m.nip) + "</td></tr>"
       + "<tr><td>Jabatan</td><td>" + esc(m.jabatan) + "</td><td>Masa Kerja</td><td>" + esc(m.masa_kerja || "-") + "</td></tr>"
-      + '<tr><td>Unit Kerja</td><td colspan="3">' + esc(m.unit) + "</td></tr></table>"
+      + '<tr><td>Unit Kerja</td><td colspan="3">' + esc(m.unit) + "</td></tr>"
 
-      + '<table style="border-top:0"><tr><td colspan="4" class="st">' + esc(T.sec["2"]) + "</td></tr>" + jenisRows + "</table>"
-      + '<table style="border-top:0"><tr><td class="st">' + esc(T.sec["3"]) + "</td></tr><tr><td>" + esc(p.alasan) + "</td></tr></table>"
-      + '<table style="border-top:0"><tr><td colspan="4" class="st">' + esc(T.sec["4"]) + "</td></tr>"
-      + '<tr><td style="width:12%">Selama</td><td style="width:20%">' + hari(p.mulai, p.selesai) + " (hari)</td>"
-      + '<td style="width:16%">Mulai Tanggal</td><td>' + fmtID(p.mulai) + " s/d " + fmtID(p.selesai) + "</td></tr></table>"
+      + '<tr><td colspan="4" class="st">' + esc(T.sec["2"]) + "</td></tr>" + jenisRows
 
-      + '<table style="border-top:0"><tr><td colspan="2" class="st">' + esc(T.sec["5"]) + "</td></tr>"
-      + '<tr><td style="width:60%">1. Cuti Tahunan &mdash; sisa tahun berjalan (N)</td><td class="tnum">' + esc(p.sisa_n) + "</td></tr>"
-      + '<tr><td>2. Cuti Besar</td><td class="tnum">0</td></tr><tr><td>3. Cuti Sakit</td><td class="tnum">0</td></tr>'
-      + '<tr><td>4. Cuti Melahirkan</td><td class="tnum">0</td></tr><tr><td>5. Cuti Karena Alasan Penting</td><td class="tnum">0</td></tr>'
-      + '<tr><td>6. Cuti di Luar Tanggungan Negara</td><td class="tnum">0</td></tr></table>'
+      + '<tr><td colspan="4" class="st">' + esc(T.sec["3"]) + "</td></tr>"
+      + '<tr><td colspan="4">' + esc(p.alasan) + "</td></tr>"
 
-      + '<table style="border-top:0"><tr><td colspan="2" class="st">' + esc(T.sec["6"]) + "</td></tr>"
-      + '<tr><td style="width:70%">' + esc(p.alamat || "(sesuai alamat domisili pada data kepegawaian)") + dok + "</td>"
+      + '<tr><td colspan="4" class="st">' + esc(T.sec["4"]) + "</td></tr>"
+      + "<tr><td>Selama</td><td>" + hari(p.mulai, p.selesai) + " (hari)</td>"
+      + "<td>Mulai Tanggal</td><td>" + fmtID(p.mulai) + " s/d " + fmtID(p.selesai) + "</td></tr>"
+
+      + '<tr><td colspan="4" class="st">' + esc(T.sec["5"]) + "</td></tr>"
+      + '<tr><td colspan="3">1. Cuti Tahunan &mdash; sisa tahun berjalan (N)</td><td class="tnum">' + esc(p.sisa_n) + "</td></tr>"
+      + '<tr><td colspan="3">2. Cuti Besar</td><td class="tnum">0</td></tr>'
+      + '<tr><td colspan="3">3. Cuti Sakit</td><td class="tnum">0</td></tr>'
+      + '<tr><td colspan="3">4. Cuti Melahirkan</td><td class="tnum">0</td></tr>'
+      + '<tr><td colspan="3">5. Cuti Karena Alasan Penting</td><td class="tnum">0</td></tr>'
+      + '<tr><td colspan="3">6. Cuti di Luar Tanggungan Negara</td><td class="tnum">0</td></tr>'
+
+      + '<tr><td colspan="4" class="st">' + esc(T.sec["6"]) + "</td></tr>"
+      + '<tr><td colspan="3">' + esc(p.alamat || "(sesuai alamat domisili pada data kepegawaian)") + dok + "</td>"
       + "<td>No. HP / TELP<br>" + esc(p.telp) + "<br><br>" + esc(T.penutup_pemohon) + "<br>"
       + (m.ttd_path ? '<img alt="Tanda tangan pemohon" src="' + esc(m.ttd_path) + '" style="max-height:52px;max-width:150px;margin:2px 0">' : "<br><br><br>")
-      + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr></table>"
+      + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr>"
 
-      + '<table style="border-top:0"><tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" style="height:96px;position:relative">' + (dec ? sigArea(pa, 70) : "") + "</td></tr></table>"
+      + '<tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>" + decRow
+      + '<tr><td colspan="4" style="height:96px;position:relative">' + (dec ? sigArea(pa, 70) : "") + "</td></tr>"
 
-      + '<table style="border-top:0"><tr><td colspan="4" class="st">' + esc(T.sec["8"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" style="height:110px;position:relative">' + (dec ? sigArea(pk, 90) : "") + "</td></tr></table>"
+      + '<tr><td colspan="4" class="st">' + esc(T.sec["8"]) + "</td></tr>" + decRow
+      + '<tr><td colspan="4" style="height:110px;position:relative">' + (dec ? sigArea(pk, 90) : "") + "</td></tr>"
+      + "</table>"
 
       + (T.catatan_kaki ? '<div style="margin-top:8px;font-size:11px">' + esc(T.catatan_kaki) + "</div>" : "")
       + '<div style="margin-top:8px;font-size:11px;color:#555">' + catatanStatus(p) + "</div>"
