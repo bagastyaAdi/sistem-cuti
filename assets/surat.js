@@ -196,10 +196,10 @@
       + ttdPemohon(m) + "(" + esc(m.nama) + ")<br>NIP. " + esc(m.nip) + "</td></tr></table>"
 
       + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["7"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" class="sig" style="height:120px;position:relative">' + (dec ? sigArea(pa, 86, cfg.ttd_atasan_path, false, "bidang") : "") + "</td></tr></table>"
+      + '<tr><td colspan="3"></td><td class="sig" style="height:120px;position:relative">' + (dec ? sigArea(pa, 86, cfg.ttd_atasan_path, false, "bidang") : "") + "</td></tr></table>"
 
       + '<table class="sec"><tr><td colspan="4" class="st">' + esc(T.sec["8"]) + "</td></tr>" + decRow
-      + '<tr><td colspan="4" class="sig" style="height:118px;position:relative">' + (dec ? sigArea(pk, 92, cfg.ttd_path, true, "dinas") : "") + "</td></tr></table>"
+      + '<tr><td colspan="3"></td><td class="sig" style="height:118px;position:relative">' + (dec ? sigArea(pk, 92, cfg.ttd_path, true, "dinas") : "") + "</td></tr></table>"
 
       + (T.catatan_kaki ? '<div style="margin-top:8px;font-size:11px">' + esc(T.catatan_kaki) + "</div>" : "")
       + '<div style="margin-top:8px;font-size:11px;color:#555">' + catatanStatus(p) + "</div>"
