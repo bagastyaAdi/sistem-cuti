@@ -13,11 +13,11 @@
 <aside class="sidebar" id="sidebar">
   <div class="sb-brand"><img src="logo-badung.png" alt=""><span>Sistem Cuti<br><span class="sub">Portal Pegawai</span></span></div>
   <nav class="sb-nav">
-    <a data-tab="beranda" class="active">Beranda</a>
-    <a data-tab="ajukan">Ajukan Cuti</a>
-    <a data-tab="riwayat">Riwayat</a>
-    <a data-tab="profil">Profil</a>
-    <a data-tab="pedoman">Pedoman</a>
+    <a data-ic="home" data-tab="beranda" class="active">Beranda</a>
+    <a data-ic="filePlus" data-tab="ajukan">Ajukan Cuti</a>
+    <a data-ic="history" data-tab="riwayat">Riwayat</a>
+    <a data-ic="user" data-tab="profil">Profil</a>
+    <a data-ic="book" data-tab="pedoman">Pedoman</a>
   </nav>
   <div class="sb-foot">
     <div class="avatar" id="avatar">?</div>
@@ -42,10 +42,10 @@
       <div id="hiMeta" class="muted" style="font-size:12px;margin-top:2px"></div>
     </div></div>
     <div class="stats">
-      <div class="stat"><div class="k">Dalam Proses</div><div class="v" id="stProses">0</div></div>
-      <div class="stat"><div class="k">Selesai</div><div class="v" id="stSelesai" style="color:var(--ok)">0</div></div>
-      <div class="stat"><div class="k">Perlu Revisi</div><div class="v" id="stRevisi">0</div></div>
-      <div class="stat"><div class="k">Sisa Cuti Tahunan</div><div class="v" id="stSisa">12</div></div>
+      <div class="stat" data-ic="clock"><div class="k">Dalam Proses</div><div class="v" id="stProses">0</div></div>
+      <div class="stat" data-ic="check"><div class="k">Selesai</div><div class="v" id="stSelesai" style="color:var(--ok)">0</div></div>
+      <div class="stat" data-ic="edit"><div class="k">Perlu Revisi</div><div class="v" id="stRevisi">0</div></div>
+      <div class="stat" data-ic="calendar"><div class="k">Sisa Cuti Tahunan</div><div class="v" id="stSisa">12</div></div>
     </div>
     <button class="btn btn-primary btn-block" id="btnAjukan1">+ Ajukan Cuti</button>
     <div class="card">
@@ -244,6 +244,7 @@
 <script src="assets/config.js"></script>
 <script src="assets/db.js"></script>
 <script src="assets/surat.js"></script>
+<script src="assets/icons.js"></script>
 <script src="assets/crop.js"></script>
 <script src="assets/pegawai.js"></script>
 </body>
