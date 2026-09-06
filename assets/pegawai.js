@@ -144,9 +144,13 @@
   document.querySelectorAll("#pTtdAtur .posrow input[type=range]").forEach(function (r) {
     r.addEventListener("input", ttdLive);
   });
-  $("pTtdFile").addEventListener("change", async function () {
+  $("pTtdFile").addEventListener("change", function () {
     var f = this.files[0]; if (!f) return;
-    if (f.size > 1.5 * 1024 * 1024) { alert("Ukuran maksimal 1,5 MB."); this.value = ""; return; }
+    this.value = "";
+    CROP.open(f, saveTtd);
+  });
+  async function saveTtd(f) {
+    if (f.size > 1.5 * 1024 * 1024) { alert("Ukuran gambar melebihi 1,5 MB. Potong lebih kecil."); return; }
     $("pTtdPrev").innerHTML = '<span class="muted">mengunggah…</span>';
     try {
       var url = await DB.uploadTtdPegawai(me.id, f);
@@ -156,8 +160,7 @@
       $("pTtdPrev").innerHTML = '<img src="' + esc(url) + '" style="max-height:64px">';
       ttdLive();
     } catch (ex) { alert("Gagal: " + ex.message); $("pTtdPrev").innerHTML = "belum ada"; }
-    this.value = "";
-  });
+  }
   $("pTtdClear").onclick = async function () {
     var r = await DB.updateProfil(me.id, { ttd_path: "", ttd_pos: {} });
     if (r.error) return alert("Gagal: " + r.error.message);

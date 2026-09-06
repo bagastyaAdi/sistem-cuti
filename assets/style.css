@@ -46,7 +46,7 @@ a{color:var(--primary);text-decoration:none}
 .sidebar{width:216px;flex:none;background:var(--surface);border-right:1px solid var(--border);
   display:flex;flex-direction:column;position:sticky;top:0;height:100dvh}
 .sb-brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:16px 14px;border-bottom:1px solid var(--border)}
-.sb-brand img{height:26px;width:auto;object-fit:contain;flex:none}
+.sb-brand img{width:30px;height:30px;object-fit:contain;flex:none}
 .sb-brand .sub{font-size:11px;color:var(--muted);font-weight:500}
 .sb-nav{display:flex;flex-direction:column;gap:2px;padding:8px;flex:1;overflow-y:auto}
 .sb-nav a{padding:10px 12px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer}
@@ -147,6 +147,23 @@ table.data tr:last-child td{border-bottom:0}
 .alert-ok{background:var(--ok-bg);color:var(--ok)}
 .alert-rev{background:var(--rev-bg);color:var(--rev)}
 .ic-i{width:17px;height:17px;margin-right:7px;vertical-align:-4px}
+
+/* Pemotong gambar */
+.crop-ov{position:fixed;inset:0;z-index:80;background:rgba(10,12,18,.6);display:none;align-items:center;justify-content:center;padding:16px}
+.crop-ov.open{display:flex}
+.crop-modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);width:100%;max-width:520px;overflow:hidden}
+.crop-head{padding:12px 16px;border-bottom:1px solid var(--border)}
+.crop-head b{font-size:14px}
+.crop-hint{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.crop-stage{position:relative;height:340px;background:var(--surface-2) repeating-conic-gradient(#0000 0 25%, rgba(128,128,128,.12) 0 50%) 0 0/18px 18px;touch-action:none;user-select:none;overflow:hidden}
+.crop-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.crop-box{position:absolute;border:1px solid #fff;box-shadow:0 0 0 9999px rgba(0,0,0,.45);cursor:move}
+.crop-box i{position:absolute;width:14px;height:14px;background:#fff;border:1px solid #888;border-radius:2px}
+.crop-box i[data-h=nw]{left:-7px;top:-7px;cursor:nwse-resize}
+.crop-box i[data-h=ne]{right:-7px;top:-7px;cursor:nesw-resize}
+.crop-box i[data-h=sw]{left:-7px;bottom:-7px;cursor:nesw-resize}
+.crop-box i[data-h=se]{right:-7px;bottom:-7px;cursor:nwse-resize}
+.crop-foot{display:flex;justify-content:flex-end;gap:8px;padding:12px 16px;border-top:1px solid var(--border)}
 
 .spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--primary);border-radius:999px;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}

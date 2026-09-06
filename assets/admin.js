@@ -291,15 +291,18 @@
   });
   var LEGAL_COL = { ttd: "ttd_path", ttd_atasan: "ttd_atasan_path", cap: "cap_path" };
   function patch1(k, v) { var o = {}; o[k] = v; return o; }
-  async function upimg(input, jenis, prevId) {
+  function upimg(input, jenis, prevId) {
     var f = input.files[0]; if (!f) return;
-    if (f.size > 1.5 * 1024 * 1024) { alert("Maksimal 1,5 MB."); input.value = ""; return; }
+    input.value = "";
+    CROP.open(f, function (cf) { doUpimg(cf, jenis, prevId); });
+  }
+  async function doUpimg(f, jenis, prevId) {
+    if (f.size > 1.5 * 1024 * 1024) { alert("Ukuran gambar melebihi 1,5 MB. Potong lebih kecil."); return; }
     try {
       var url = await DB.uploadLegal(f, jenis);
       await DB.simpanPengaturan(patch1(LEGAL_COL[jenis], url));
       pengaturan = await DB.getPengaturan(true); paintImg(prevId, url);
     } catch (ex) { alert("Gagal unggah: " + ex.message); }
-    input.value = "";
   }
   async function clearimg(jenis, prevId, fileId) {
     await DB.simpanPengaturan(patch1(LEGAL_COL[jenis], ""));
