@@ -271,42 +271,54 @@
 
   <!-- PANDUAN -->
   <section data-pane="panduan" hidden class="stack">
-      <div class="card">
-        <div class="card-h">Panduan Pengaturan</div>
-        <div class="card-b pedoman">
-          <div class="section-title">Penomoran Surat</div>
-          <p>Isi <b>Format nomor</b> memakai kode yang otomatis diganti saat surat disetujui:</p>
-          <table class="pedoman-tbl">
-            <tr><td><code>{no}</code></td><td>nomor urut apa adanya &mdash; mis. <code>7</code></td></tr>
-            <tr><td><code>{no3}</code></td><td>nomor urut jadi 3 digit &mdash; mis. <code>007</code></td></tr>
-            <tr><td><code>{bulan}</code></td><td>bulan berjalan angka Romawi &mdash; mis. <code>IX</code> (September)</td></tr>
-            <tr><td><code>{tahun}</code></td><td>tahun berjalan &mdash; mis. <code>2026</code></td></tr>
-          </table>
-          <p>Contoh: <code>800.1.11.4/{no}/Diskominfo/{bulan}/{tahun}</code> &rarr; <code>800.1.11.4/7/Diskominfo/IX/2026</code>.
-            <b>Nomor urut berikutnya</b> = angka untuk surat berikut; naik +1 otomatis tiap penerbitan.</p>
+    <div class="card">
+      <div class="card-h">Panduan Pengaturan</div>
+      <div class="card-b">
+        <p class="hint">Pilih topik untuk membuka penjelasannya.</p>
 
-          <div class="section-title">Pejabat Penandatangan</div>
-          <p>Nama, jabatan, NIP dua pejabat. <b>Kepala Dinas</b> tanda tangan di Bagian VIII (Keputusan);
-            <b>Kepala Bidang / Atasan Langsung</b> di Bagian VII (Pertimbangan). Tampil hanya pada surat <b>Disetujui</b>.</p>
+        <details class="guide"><summary>Penomoran surat</summary>
+          <div class="g-body pedoman">
+            <p>Kode pada <b>Format nomor</b> yang diganti otomatis saat surat disetujui:</p>
+            <table class="pedoman-tbl">
+              <tr><td><code>{no}</code></td><td>nomor urut &mdash; <code>7</code></td></tr>
+              <tr><td><code>{no3}</code></td><td>3 digit &mdash; <code>007</code></td></tr>
+              <tr><td><code>{bulan}</code></td><td>bulan Romawi &mdash; <code>IX</code></td></tr>
+              <tr><td><code>{tahun}</code></td><td>tahun &mdash; <code>2026</code></td></tr>
+            </table>
+            <p><code>800.1.11.4/{no}/Diskominfo/{bulan}/{tahun}</code> &rarr; <code>800.1.11.4/7/Diskominfo/IX/2026</code>. Nomor berikutnya naik +1 otomatis tiap penerbitan.</p>
+          </div>
+        </details>
 
-          <div class="section-title">Tanda Tangan &amp; Cap Dinas</div>
-          <ul>
-            <li>Unggah 3 gambar terpisah (PNG latar transparan, maks 1,5 MB): <b>TTD Kepala Dinas</b>, <b>TTD Kepala Bidang</b>, <b>Cap Dinas</b>.</li>
-            <li><b>Cap</b> hanya di Bagian VIII, di <b>atas</b> TTD Kepala Dinas (semi-transparan).</li>
-            <li><b>Atur Posisi</b> &mdash; geser slider X / Y / Lebar tiap gambar, tekan <b>Pratinjau Posisi</b> untuk melihat pada contoh surat disetujui. Tersimpan otomatis saat slider dilepas.</li>
-            <li>Centang <b>Tampilkan tanda tangan &amp; cap</b> untuk mengaktifkan.</li>
-          </ul>
+        <details class="guide"><summary>Pejabat penandatangan</summary>
+          <div class="g-body pedoman">
+            <p>Nama, jabatan, NIP dua pejabat. <b>Kepala Dinas</b> &rarr; Bagian VIII; <b>Kepala Bidang / Atasan Langsung</b> &rarr; Bagian VII. Tampil hanya pada surat <b>Disetujui</b>.</p>
+          </div>
+        </details>
 
-          <div class="section-title">Template Surat</div>
-          <ul>
-            <li><b>Kepala surat</b> &mdash; baris besar &amp; baris alamat, satu baris per baris teks. <b>URL logo</b> kosong = logo bawaan.</li>
-            <li><b>Judul</b>, <b>Ditujukan kepada</b>, <b>Kota</b>, <b>Kalimat penutup pemohon</b>, <b>Catatan kaki</b> &mdash; teks tetap surat.</li>
-            <li><b>Isi per Bagian I&ndash;VIII</b> &mdash; tiap bagian: judul + teks di dalamnya. Bagian II memuat <b>6 nama jenis cuti</b> (dipakai juga Bagian V). Bagian VII memuat <b>4 label kolom keputusan</b> (dipakai juga Bagian VIII).</li>
-            <li>Kolom kosong = teks bawaan. <b>Kembalikan ke Bawaan</b> menghapus semua ubahan template.</li>
-          </ul>
-          <p class="hint">Perubahan berlaku untuk surat yang <b>belum disetujui</b>. Surat yang sudah terbit memakai salinan template saat penerbitannya.</p>
-        </div>
+        <details class="guide"><summary>Tanda tangan &amp; cap dinas</summary>
+          <div class="g-body pedoman">
+            <ul>
+              <li>3 gambar terpisah (PNG transparan, maks 1,5 MB): TTD Kepala Dinas, TTD Kepala Bidang, Cap Dinas. Tiap gambar dipotong dulu sebelum dipakai.</li>
+              <li><b>Cap</b> hanya Bagian VIII, di atas TTD Kepala Dinas.</li>
+              <li><b>Atur Posisi</b> &rarr; slider X / Y / Lebar, <b>Pratinjau Posisi</b> menampilkan contoh surat disetujui. Tersimpan saat slider dilepas.</li>
+              <li>Centang <b>Tampilkan tanda tangan &amp; cap</b> untuk mengaktifkan.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="guide"><summary>Template surat</summary>
+          <div class="g-body pedoman">
+            <ul>
+              <li><b>Kepala surat</b> &mdash; baris besar &amp; alamat, satu baris per baris. <b>URL logo</b> kosong = logo bawaan.</li>
+              <li><b>Judul</b>, <b>Ditujukan</b>, <b>Kota</b>, <b>Penutup pemohon</b>, <b>Catatan kaki</b> &mdash; teks tetap surat.</li>
+              <li><b>Isi per Bagian I&ndash;VIII</b> &mdash; judul + isi tiap bagian. Bagian II: 6 nama jenis cuti (dipakai juga Bagian V). Bagian VII: 4 label kolom keputusan (dipakai juga Bagian VIII).</li>
+              <li>Kolom kosong = bawaan. <b>Kembalikan ke Bawaan</b> menghapus semua ubahan.</li>
+            </ul>
+            <p class="hint">Perubahan berlaku untuk surat yang belum disetujui. Surat terbit memakai salinan template saat penerbitannya.</p>
+          </div>
+        </details>
       </div>
+    </div>
   </section>
 </main>
 </div><!-- /layout -->

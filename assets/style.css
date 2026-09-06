@@ -200,6 +200,16 @@ table.data tr:last-child td{border-bottom:0}
 .paper .ttdblok{width:48%;margin-left:auto;text-align:center;line-height:1.4}
 .paper .ttdnama{text-decoration:underline}
 
+details.guide{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;background:var(--surface)}
+details.guide>summary{cursor:pointer;font-size:14px;font-weight:600;padding:14px 16px;display:flex;align-items:center;gap:10px;list-style:none}
+details.guide>summary::-webkit-details-marker{display:none}
+details.guide>summary::after{content:"+";margin-left:auto;color:var(--muted);font-weight:400;font-size:18px}
+details.guide[open]>summary::after{content:"–"}
+details.guide[open]>summary{border-bottom:1px solid var(--border)}
+details.guide .g-no{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--surface-2);border:1px solid var(--border);font-size:12px;font-weight:700;flex:none}
+details.guide .g-body{padding:14px 16px 4px}
+details.guide .g-body>:first-child{margin-top:0}
+
 details.bagian{border:1px solid var(--border);border-radius:8px;margin-bottom:8px;padding:4px 12px}
 details.bagian>summary{cursor:pointer;font-size:13px;font-weight:600;padding:8px 0}
 details.bagian[open]{padding-bottom:10px}
