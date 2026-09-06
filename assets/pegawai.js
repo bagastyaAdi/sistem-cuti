@@ -135,9 +135,12 @@
     if (!me.ttd_path) { $("pTtdAtur").hidden = true; return; }
     $("pTtdAtur").hidden = false;
     var q = readTtdPos();
+    var w = q.w || 150;
     $("pTtdLive").innerHTML = '<div style="color:#111;font-family:\'Times New Roman\',Georgia,serif;font-size:13px;text-align:center;width:62%;margin-left:auto;line-height:1.4">'
-      + "Hormat Saya,<br>"
-      + '<img src="' + esc(me.ttd_path) + '" style="display:block;position:relative;width:' + (q.w || 150) + "px;margin:" + (q.y != null ? q.y : 2) + "px auto 0;left:" + (q.x != null ? q.x : 0) + 'px">'
+      + "Hormat Saya,"
+      + '<div style="position:relative;height:46px">'
+      + '<img src="' + esc(me.ttd_path) + '" style="position:absolute;width:' + w + "px;left:calc(50% - " + (w / 2) + "px + " + (q.x != null ? q.x : 0) + "px);top:" + (q.y != null ? q.y : 2) + 'px">'
+      + "</div>"
       + "(" + esc(me.nama) + ")<br>NIP. " + esc(me.nip) + "</div>";
   }
   document.querySelectorAll("#pTtdAtur .posrow input[type=range]").forEach(function (r) {

@@ -131,13 +131,14 @@
         + "</div>";
     }
 
-    // Tanda tangan pemohon (bagian VI). Ukuran & geser diatur pegawai (m.ttd_pos = {w,x,y}).
+    // Tanda tangan pemohon (bagian VI). Gambar MELAYANG (position:absolute) —
+    // geser/ukuran diatur pegawai (m.ttd_pos = {w,x,y}) tanpa menggeser teks nama & NIP.
     function ttdPemohon(m) {
-      if (!m.ttd_path) return "<br><br><br>";
+      if (!m.ttd_path) return '<div style="height:46px"></div>';
       var q = m.ttd_pos || {};
-      return '<img alt="Tanda tangan pemohon" src="' + esc(m.ttd_path)
-        + '" style="display:block;position:relative;width:' + (q.w || 150) + "px;margin:"
-        + (q.y != null ? q.y : 2) + "px auto 0;left:" + (q.x != null ? q.x : 0) + 'px">';
+      var img = '<img alt="Tanda tangan pemohon" src="' + esc(m.ttd_path)
+        + '" style="position:absolute;width:' + (q.w || 150) + "px;left:calc(50% - " + ((q.w || 150) / 2) + "px + " + (q.x != null ? q.x : 0) + "px);top:" + (q.y != null ? q.y : 2) + 'px">';
+      return '<div style="position:relative;height:46px">' + img + "</div>";
     }
 
     var dok = (p.dokumen && p.dokumen.length)
