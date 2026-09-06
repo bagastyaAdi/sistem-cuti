@@ -22,6 +22,11 @@ alter table public.profiles   add column if not exists ttd_pos  jsonb default '{
 update public.pengaturan set template  = '{}'::jsonb where template  is null;
 update public.pengaturan set legal_pos = '{}'::jsonb where legal_pos is null;
 
+-- ---------- IZIN: admin boleh menghapus pengajuan ----------
+drop policy if exists "admin hapus pengajuan" on public.pengajuan;
+create policy "admin hapus pengajuan" on public.pengajuan
+  for delete using (public.is_admin());
+
 -- ---------- IZIN STORAGE: pegawai boleh unggah ULANG (upsert) berkasnya ----------
 drop policy if exists "pemohon perbarui berkas sendiri" on storage.objects;
 create policy "pemohon perbarui berkas sendiri" on storage.objects

@@ -149,6 +149,10 @@
       .eq("id", id).select(SEL).single();
     if(r.error) throw r.error; return r.data;
   }
+  async function hapusPengajuan(id){
+    var r = await sb.from("pengajuan").delete().eq("id", id);
+    if(r.error) throw r.error; return true;
+  }
   async function setujuiTerbitkan(id){ // RPC atomik: naikkan counter + set nomor
     var r = await sb.rpc("terbitkan_cuti", { p_id: id });
     if(r.error) throw r.error;
@@ -179,7 +183,7 @@
     updateProfil:updateProfil, listPegawai:listPegawai,
     getPengaturan:getPengaturan, simpanPengaturan:simpanPengaturan, uploadLegal:uploadLegal,
     pengajuanSaya:pengajuanSaya, semuaPengajuan:semuaPengajuan, buatPengajuan:buatPengajuan,
-    revisiKirimUlang:revisiKirimUlang, mintaRevisi:mintaRevisi, tolak:tolak, setujuiTerbitkan:setujuiTerbitkan,
+    revisiKirimUlang:revisiKirimUlang, mintaRevisi:mintaRevisi, tolak:tolak, hapusPengajuan:hapusPengajuan, setujuiTerbitkan:setujuiTerbitkan,
     uploadDokumen:uploadDokumen, uploadTtdPegawai:uploadTtdPegawai, docUrl:docUrl,
   };
 })();

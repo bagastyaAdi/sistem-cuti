@@ -95,7 +95,10 @@
         + '<td class="tnum">' + fmtID(r.mulai) + ' – ' + fmtID(r.selesai) + '</td>'
         + '<td class="tnum">' + (r.nomor || '—') + '</td>'
         + '<td>' + DB.badge(r.status) + '</td>'
-        + '<td><button class="btn btn-ghost btn-sm" data-act="lihat" data-id="' + r.id + '">Lihat</button></td>'
+        + '<td><div class="row" style="gap:6px;flex-wrap:nowrap">'
+        + '<button class="btn btn-ghost btn-sm" data-act="lihat" data-id="' + r.id + '">Lihat</button>'
+        + '<button class="btn btn-danger btn-sm" data-act="hapus" data-id="' + r.id + '">Hapus</button>'
+        + '</div></td>'
         + '</tr>';
     }).join("") || '<tr><td colspan="7" class="muted center" style="padding:24px">Tidak ada data.</td></tr>';
   }
@@ -127,9 +130,16 @@
   });
 
   // ---- verifikasi / letter ----
-  document.body.addEventListener("click", function (e) {
+  document.body.addEventListener("click", async function (e) {
     var b = e.target.closest("button[data-act]"); if (!b) return;
     var r = rows.find(function (x) { return x.id === b.dataset.id; }); if (!r) return;
+    if (b.dataset.act === "hapus") {
+      if (!confirm("Hapus pengajuan cuti " + r.pemohon.nama + " (" + (r.nomor || fmtID(r.tgl_ajukan)) + ")? Tindakan ini tidak dapat dibatalkan.")) return;
+      b.disabled = true;
+      try { await DB.hapusPengajuan(r.id); await reload(); }
+      catch (ex) { alert("Gagal menghapus: " + ex.message); b.disabled = false; }
+      return;
+    }
     openLetter(r, b.dataset.act === "periksa");
   });
 

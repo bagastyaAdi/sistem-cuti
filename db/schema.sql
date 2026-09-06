@@ -107,6 +107,10 @@ drop policy if exists "admin proses pengajuan" on public.pengajuan;
 create policy "admin proses pengajuan" on public.pengajuan
   for update using (public.is_admin()) with check (public.is_admin());
 
+drop policy if exists "admin hapus pengajuan" on public.pengajuan;
+create policy "admin hapus pengajuan" on public.pengajuan
+  for delete using (public.is_admin());
+
 -- pengaturan
 drop policy if exists "semua yang login baca pengaturan" on public.pengaturan;
 create policy "semua yang login baca pengaturan" on public.pengaturan
