@@ -75,9 +75,9 @@ a{color:var(--primary);text-decoration:none}
 
 /* Judul halaman — di luar kartu */
 .page-head{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin:0 0 16px}
-.page-head>div:first-child{flex:1;min-width:180px}
-.page-head h1{margin:0;font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--text)}
-.page-head p{margin:3px 0 0;font-size:12.5px;color:var(--muted)}
+.page-head>div:first-child{flex:1;min-width:180px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.page-head h1{margin:0;font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.2;color:var(--text)}
+.page-head p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.3}
 .page-head .btn,.page-head select{flex:none}
 /* Desktop: judul jadi bilah header putih penuh selebar konten, sejajar dgn brand sidebar */
 @media(min-width:861px){
@@ -98,7 +98,8 @@ a{color:var(--primary);text-decoration:none}
 .section-title+.hint{margin-top:-6px}
 
 /* Forms — mobile first, label di atas */
-.field{display:grid;gap:6px;margin-bottom:14px}
+.field{display:grid;gap:6px;margin-bottom:14px;align-content:start}
+.field>label{align-self:end;min-height:19px}
 form .field:last-child{margin-bottom:0}
 form .section-title{margin:18px 0 12px}
 form>button,form .card-b>button,.card-b>form>button{margin-top:4px}
@@ -111,12 +112,17 @@ input,select,textarea{
 }
 input:focus,select:focus,textarea:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:transparent;background:var(--surface)}
 input[readonly]{color:var(--muted)}
-input[type=checkbox],input[type=radio]{width:auto;accent-color:var(--primary)}
+input[type=checkbox],input[type=radio]{width:auto;height:auto;accent-color:var(--primary)}
+input[type=range]{height:auto}
 input[type=file]{padding:8px;font-size:13px}
 textarea{min-height:76px;resize:vertical}
-@media(min-width:560px){ .field-2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px} }
+@media(min-width:560px){ .field-2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:start} }
+@media(min-width:680px){ .field-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 16px;align-items:start} }
 .field-2>*{min-width:0}
-input,select,textarea{min-width:0}
+input,select,textarea{min-width:0;height:46px}
+textarea{height:auto;min-height:88px}
+input[type=file]{height:auto}
+input[type=search]{height:46px}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-weight:600;font-size:14px;
