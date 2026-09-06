@@ -138,9 +138,10 @@
     $("modalTitle").textContent = "Formulir Cuti — " + r.pemohon.nama;
     var bar = $("dokBar");
     if (r.dokumen && r.dokumen.length) {
+      var fico = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:-3px;margin-right:4px"><path d="M8 3h6l5 5v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M14 3v5h5"/></svg>';
       bar.innerHTML = "Dokumen pendukung: " + r.dokumen.map(function (d) {
-        return '<a href="' + DB.docUrl(d.path) + '" target="_blank" rel="noopener">' + esc(d.name) + '</a>';
-      }).join(" · ");
+        return '<a class="doklink" href="' + DB.docUrl(d.path) + '" target="_blank" rel="noopener">' + fico + esc(d.name) + '</a>';
+      }).join(" &nbsp; ");
       bar.hidden = false;
     } else bar.hidden = true;
 

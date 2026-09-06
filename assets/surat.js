@@ -141,8 +141,15 @@
       return '<div style="position:relative;height:46px">' + img + "</div>";
     }
 
+    var fileIco = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:-2px;margin-right:3px"><path d="M8 3h6l5 5v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M14 3v5h5"/></svg>';
     var dok = (p.dokumen && p.dokumen.length)
-      ? "<br><br>Dokumen pendukung: " + esc(p.dokumen.map(function (d) { return d.name || d; }).join(", "))
+      ? "<br><br>Dokumen pendukung: " + p.dokumen.map(function (d) {
+          var url = d.path && DB.docUrl ? DB.docUrl(d.path) : (d.url || "");
+          var nm = esc(d.name || d.path || "berkas");
+          return url
+            ? '<a class="doklink" href="' + esc(url) + '" target="_blank" rel="noopener">' + fileIco + nm + "</a>"
+            : fileIco + nm;
+        }).join(", ")
       : "";
 
     return '<div class="paper">'
