@@ -61,15 +61,15 @@
 
   <!-- SEMUA -->
   <section data-pane="semua" hidden class="stack">
-    <div class="page-head">
-      <div><h1>Semua Pengajuan</h1><p>Seluruh pengajuan dari semua pegawai.</p></div>
-      <select id="filterStatus" style="width:auto;font-size:13px;padding:8px 12px">
-        <option value="">Semua status</option>
-        <option>Menunggu Verifikasi</option><option>Perlu Revisi</option>
-        <option>Disetujui</option><option>Tidak Disetujui</option>
-      </select>
-    </div>
+    <div class="page-head"><div><h1>Semua Pengajuan</h1><p>Seluruh pengajuan dari semua pegawai.</p></div></div>
     <div class="card">
+      <div class="card-tools">
+        <select id="filterStatus" style="width:auto;font-size:13px">
+          <option value="">Semua status</option>
+          <option>Menunggu Verifikasi</option><option>Perlu Revisi</option>
+          <option>Disetujui</option><option>Tidak Disetujui</option>
+        </select>
+      </div>
       <div class="tablewrap">
         <table class="data">
           <thead><tr><th>Pemohon</th><th>Jenis</th><th>Tgl Ajukan</th><th>Tanggal Cuti</th><th>Nomor</th><th>Status</th><th></th></tr></thead>
